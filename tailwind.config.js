@@ -8,7 +8,7 @@ module.exports = {
       secondary: "#AE9BC8",
       secondaryPink: "#d9138a",
       dark: "#000",
-      light: "#303030",
+      light: "#fff",
     },
     screens: {
       'sm': '640px',

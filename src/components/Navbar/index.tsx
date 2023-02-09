@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
@@ -79,10 +80,12 @@ function Navbar() {
                     Home
                 </li>
                   </Link>
-               
-               
-               
               </ul>
+
+              <div className="flex justify-center items-center gap-5">
+                <Link to='/login'><Button size="large"  >Log In</Button></Link>
+                <Link to='/register'><Button size="large" type="primary" >Sign Up</Button></Link>
+              </div>
             </div>
           </div>
         </div>

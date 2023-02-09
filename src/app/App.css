@@ -29,3 +29,21 @@
 .slick-track{
     padding: 30px 0px;
 }
+.ant-btn-primary {
+    background-color:var(--clr-primary);
+    color: var(--clr-light);
+    font-weight: 500;
+  }
+.ant-btn-primary:hover{
+    background-color: var(--clr-secondary) !important;
+}
+.ant-btn-default{
+    background-color: var(--clr-secondary);
+    color: var(--clr-light);
+    font-weight: 500;
+}
+.ant-btn-default:hover{
+    background-color: var(--clr-primary) !important;
+    color: var(--clr-light) !important;
+}
+
