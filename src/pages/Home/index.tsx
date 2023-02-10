@@ -2,7 +2,7 @@ import React from 'react'
 import Banner from '../../features/Home/Banner'
 import Collection from '../../features/Home/Collection'
 import Layout from '../../layout'
-import ClothesSlider from '../../features/ClothesSlider'
+import ClothesSlider from '../../features/Customer/ClothesSlider'
 
 function Home() {
   return (

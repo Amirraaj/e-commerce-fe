@@ -20,7 +20,7 @@ function Collection() {
               className="Collection-image w-full h-full object-cover cursor-pointer object-top hover:scale-110 hover:opacity-80"
               style={{ transition: "all 400ms ease-in-out" }}
             />  
-            <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary text-semibold text-2xl pointer-events-none font-medium">Men's Clothes</h1>  
+            <h1 className=" collection-title absolute bottom-5 w-72 text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-light text-semibold text-4xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl pointer-events-none font-medium" style={{ textShadow: "2px 4px 3px rgba(255,255,255,0.6)" }}>Men Clothes</h1>  
           </div>
           <div className="flex w-full h-[30vh] sm:h-full bg-primary overflow-hidden relative">
             <img
@@ -29,7 +29,7 @@ function Collection() {
               className="Collection-image  w-full h-full object-cover cursor-pointer object-top hover:scale-110 hover:opacity-80"
               style={{ transition: "all 400ms ease-in-out" }}
             />
-           <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary text-semibold text-2xl pointer-events-none font-medium">Women's Clothes</h1>  
+           <h1 className=" collection-title absolute bottom-5 w-72 text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-light text-semibold text-4xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl pointer-events-none font-medium" style={{ textShadow: "2px 4px 3px rgba(255,255,255,0.6)" }}>Women Clothes</h1>  
 
           </div>
         </div>
@@ -40,7 +40,7 @@ function Collection() {
             className="Collection-image w-full h-full object-cover object-top cursor-pointer hover:scale-110 hover:opacity-80"
             style={{ transition: "all 400ms ease-in-out" }}
           />
-          <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary text-semibold text-2xl pointer-events-none font-medium">Most Popular</h1>  
+          <h1 className=" collection-title absolute bottom-5 w-72 text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-light text-semibold text-4xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl pointer-events-none font-medium" style={{ textShadow: "2px 4px 3px rgba(255,255,255,0.6)" }}>Most Popular</h1>  
         </div>
         <div className="flex flex-col w-full sm:w-[28.5%] h-full gap-5">
           <div className="flex w-full h-[30vh] sm:h-full  bg-primary overflow-hidden relative">
@@ -50,7 +50,7 @@ function Collection() {
               className="Collection-image w-full h-full object-cover cursor-pointer object-top hover:scale-110 hover:opacity-80"
               style={{ transition: "all 400ms ease-in-out" }}
             />
-          <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary text-semibold text-2xl pointer-events-none font-medium">Staff Choice</h1>  
+          <h1 className=" collection-title absolute bottom-5 w-72 text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-light text-semibold text-4xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl pointer-events-none font-medium" style={{ textShadow: "2px 4px 3px rgba(255,255,255,0.6)" }}>Staff Choice</h1>  
           </div>
           <div className="flex w-full h-[30vh] sm:h-full bg-primary overflow-hidden relative">
             <img
@@ -59,7 +59,7 @@ function Collection() {
               className="Collection-image w-full h-full object-cover cursor-pointer object-top hover:scale-110 hover:opacity-80"
               style={{ transition: "all 400ms ease-in-out" }}
             />
-          <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary text-semibold text-2xl pointer-events-none font-medium">Childrent's Clothes</h1>  
+          <h1 className=" collection-title absolute bottom-5 w-72 text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-light text-semibold text-4xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl pointer-events-none font-medium" style={{ textShadow: "2px 4px 3px rgba(255,255,255,0.6)" }}>Children Clothes</h1>  
           </div>
         </div>
       </div>

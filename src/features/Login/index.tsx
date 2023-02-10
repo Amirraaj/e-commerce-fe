@@ -1,38 +1,42 @@
 import { Alert, Button } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
+import loginImage from "../../assets/Clothes/login.jpg"
 
 function LogInPage() {
   return (
-    <section className="flex justify-center items-center p-20  bg-secondary">
+    <section className="flex justify-center items-center p-10 md:p-20  bg-secondary">
       <div
-        className=" bg-primary flex justify-center items-center rounded-[5rem] overflow-hidden"
+        className="flex rounded-3xl overflow-hidden" 
         style={{ boxShadow: "9px 13px 34px -13px rgba(110,82,199,0.75)" }}
       >
-        <div className="login-image-holder flex justify-center items-center p-28">
-          <div className="login-image w-[390px] h-[390px] bg-light rounded-[5rem]"></div>
-        </div>
-        <div className="login-form bg-light p-[3.5rem] w-[29rem]">
-          <h1 className="rounded-full bg-primary px-11 py-3 font-medium text-4xl text-light text-center ">
+        <div className="max-w-md min-w-[20rem] hidden sm:block">
+            <img src={loginImage} alt="" className="object-cover h-full" />
+          </div>
+        <div className="login-form bg-light p-5 md:p-[3.5rem] w-[29rem]">
+        <div className="flex justify-center">
+        <h1 className="text-primary px-2  py-3 font-semibold text-4xl md:text-5xl  text-center font-secondary">
             Welcome
           </h1>
-          <h1 className="text-3xl text-primary my-10">Login Your Account</h1>
+          </div>
+          <h1 className="text-2xl md:text-3xl text-primary my-10">Login Your Account</h1>
           <form>
             <div>
               <input
-                className="w-full text-2xl text-primary py-3 border-b border-primary  focus:outline-none focus:border-indigo-500 placeholder:text-primary "
+                className="w-full text-lg text-primary py-3 border-b border-primary  focus:outline-none focus:border-indigo-500 placeholder:text-primary "
                 type=""
                 placeholder="Email"
               />
-               {/* <Alert
+              {/* <Alert
                 message="Invalid Password"
                 type="error"
                 className="mt-1 text-center"
-              /> */}
+              />  */}
             </div>
             <div className="mt-8">
 
               <input
-                className="w-full text-2xl text-primary py-3 border-b border-primary  focus:outline-none focus:border-indigo-500 placeholder:text-primary "
+                className="w-full text-lg text-primary py-3 border-b border-primary  focus:outline-none focus:border-indigo-500 placeholder:text-primary "
                 type="password"
                 placeholder="Password"
               />
@@ -53,9 +57,10 @@ function LogInPage() {
             </div>
           </form>
           <div className="mt-4 flex justify-center items-center">
-            <span className="text-center text-xl text-primary cursor-pointer opacity-90 hover:opacity-100">
+          <Link to="/register"><span className="text-center text-xl text-primary cursor-pointer opacity-90 hover:opacity-100">
               Create Account
             </span>
+            </Link>
           </div>
           <div className="mt-8 flex justify-center items-center">
             <span className="text-center text-sm text-primary cursor-pointer opacity-90 hover:opacity-100">
