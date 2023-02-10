@@ -1,7 +1,5 @@
 import { Alert, Button } from "antd";
-import React from "react";
-import registerImage from "../../assets/Clothes/register.jpg"
-import loginImage from "../../assets/Clothes/login.jpg"
+import registerImage from "../../../assets/Clothes/register.jpg"
 import { Link } from "react-router-dom";
 
 function RegisterPage() {

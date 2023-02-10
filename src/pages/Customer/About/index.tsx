@@ -1,6 +1,6 @@
 import React from 'react'
-import ClothesSlider from '../../features/Customer/ClothesSlider'
-import Layout from '../../layout'
+import ClothesSlider from '../../../features/Customer/ClothesSlider'
+import Layout from '../../../layout'
 
 function About() {
   return (

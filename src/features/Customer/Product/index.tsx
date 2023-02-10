@@ -1,7 +1,7 @@
 
 import "./style.css";
 import landingImage from "../../assets/Clothes/Hoodie.png";
-import Card from "../../constants/Card";
+import Card from "../../../constants/Card";
 
 
 function ProductPage() {

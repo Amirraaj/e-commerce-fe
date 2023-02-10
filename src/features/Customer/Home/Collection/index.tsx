@@ -1,9 +1,9 @@
 import React from "react";
-import Popular from "../../../assets/Collection/Popular.jpg";
-import Childrent from "../../../assets/Collection/Childrengt.jpg";
-import Men from "../../../assets/Collection/Men.jpg";
-import Girl from "../../../assets/Collection/Girl.jpg";
-import Stylist from "../../../assets/Collection/Stylist.jpg";
+import Popular from "../../../../assets/Collection/Popular.jpg";
+import Childrent from "../../../../assets/Collection/Childrengt.jpg";
+import Men from "../../../../assets/Collection/Men.jpg";
+import Girl from "../../../../assets/Collection/Girl.jpg";
+import Stylist from "../../../../assets/Collection/Stylist.jpg";
 import { Button } from "antd";
 function Collection() {
   return (

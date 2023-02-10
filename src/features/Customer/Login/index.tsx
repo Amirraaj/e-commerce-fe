@@ -1,7 +1,7 @@
 import { Alert, Button } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
-import loginImage from "../../assets/Clothes/login.jpg"
+import loginImage from "../../../assets/Clothes/login.jpg"
 
 function LogInPage() {
   return (

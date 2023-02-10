@@ -1,6 +1,6 @@
 import React from 'react'
-import LogInPage from '../../features/Login'
-import Layout from '../../layout'
+import LogInPage from '../../../features/Customer/Login'
+import Layout from '../../../layout'
 
 function LogIn() {
   return (
