@@ -1,5 +1,5 @@
 import ProductPage from "../../../features/Customer/Product"
-import Layout from "../../../layout"
+import Layout from "../../../layout/Customer"
 
 
 function Product() {

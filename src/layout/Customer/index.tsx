@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
 
 function Layout({className,children,...props}:React.ComponentPropsWithRef<"div">) {
   return (

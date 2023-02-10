@@ -1,7 +1,7 @@
 import React from 'react'
 import Banner from '../../../features/Customer/Home/Banner'
 import Collection from '../../../features/Customer/Home/Collection'
-import Layout from '../../../layout'
+import Layout from '../../../layout/Customer'
 import ClothesSlider from '../../../features/Customer/ClothesSlider'
 
 function Home() {

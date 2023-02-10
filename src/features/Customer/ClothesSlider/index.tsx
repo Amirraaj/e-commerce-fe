@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useRef } from "react";
 import Card from "../../../constants/Card";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 //@ts-ignore
 function ClothesSlider({title}) {
+
+  const sliderRef = useRef(null);
+  const  next = () =>{
+      // @ts-ignore
+    sliderRef?.current?.slickNext();
+  }
+  const  prev = () =>{
+      // @ts-ignore
+    sliderRef?.current?.slickPrev();
+  }
+
+
   const sliderSettings = {
     slidesToShow: 4,
     arrows: false,
     slidesToScroll: 1,
     speed: 500,
     touchMove: true,
-    infinite: true,
-    autoplay: true,
+    // infinite: true,
+    // autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,
     responsive: [
@@ -44,9 +55,11 @@ function ClothesSlider({title}) {
     ],
   };
   return (
-    <div className="px-10 my-10">
-      <button className="Heading px-10 py-3 mb-5 bg-primary text-[#fff] rounded-xl pointer-events-none">{title}</button>
-      <Slider {...sliderSettings}>
+    <div className="px-24 my-10 relative">
+      <i className="fa-solid fa-circle-arrow-right absolute text-primary text-3xl top-[21rem] right-10 z-10 cursor-pointer hover:text-4xl" style={{ transition:"all 300ms" }} onClick={next}></i>
+      <i className="fa-solid fa-circle-arrow-left absolute text-primary text-3xl top-[21rem] left-10 z-10 cursor-pointer hover:text-4xl" style={{ transition:"all 300ms" }} onClick={prev}></i>
+      <h1 className="Heading  text-2xl font-semibold text-primary ">{title}</h1>
+      <Slider ref={sliderRef} {...sliderSettings} >
         <Card />
         <Card />
         <Card />
