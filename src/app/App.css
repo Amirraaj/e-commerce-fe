@@ -46,4 +46,15 @@
     background-color: var(--clr-primary) !important;
     color: var(--clr-light) !important;
 }
+.ant-dropdown-menu{
+    margin-top: 15px !important;
+    margin-left: 20px !important;
+}
+.ant-dropdown-menu-title-content{
+    padding: 10px 0px !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: var(--clr-primary) !important;
+}
 

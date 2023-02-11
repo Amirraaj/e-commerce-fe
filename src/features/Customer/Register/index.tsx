@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { Alert, Button } from "antd";
+import { Alert, Button, notification } from "antd";
 import registerImage from "../../../assets/Clothes/register.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerSchema } from "../../../validation/Customer";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
 import { ErrorMessage } from "@hookform/error-message";
-
+import { signUp } from "../../../api/Customer/index";
 type ContactUsFormData = z.infer<typeof registerSchema>;
 
 function RegisterPage() {
-   const [showPassword , setShowPassword] = useState(false)
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     reset,
@@ -21,8 +22,14 @@ function RegisterPage() {
     resolver: zodResolver(registerSchema),
     mode: "onBlur", // "onChange"
   });
-  const onSubmit = (data: ContactUsFormData) => {
-    console.log(data, "sssssssssssssssssssssss");
+  const onSubmit = async (data: ContactUsFormData) => {
+    const res = await signUp(data);
+    if (res?.data?.status === 201) {
+      notification.success({
+        message: res?.data?.message,
+      });
+    }
+    navigate("/");
   };
   return (
     <section className="flex justify-center items-center p-10 bg-secondary">
@@ -70,7 +77,7 @@ function RegisterPage() {
                 id="lastName"
                 {...register("lastName")}
               />
-               <ErrorMessage
+              <ErrorMessage
                 errors={errors}
                 name="lastName"
                 render={({ message }) => (
@@ -90,7 +97,7 @@ function RegisterPage() {
                 id="userName"
                 {...register("userName")}
               />
-               <ErrorMessage
+              <ErrorMessage
                 errors={errors}
                 name="userName"
                 render={({ message }) => (
@@ -110,7 +117,7 @@ function RegisterPage() {
                 id="phone"
                 {...register("phone")}
               />
-               <ErrorMessage
+              <ErrorMessage
                 errors={errors}
                 name="phone"
                 render={({ message }) => (
@@ -129,20 +136,31 @@ function RegisterPage() {
                 placeholder="Email"
                 id="email"
                 {...register("email")}
-              /> <ErrorMessage
-              errors={errors}
-              name="email"
-              render={({ message }) => (
-                <Alert
-                  message={message}
-                  type="error"
-                  className="mt-1 text-center"
-                />
-              )}
-            />
+              />{" "}
+              <ErrorMessage
+                errors={errors}
+                name="email"
+                render={({ message }) => (
+                  <Alert
+                    message={message}
+                    type="error"
+                    className="mt-1 text-center"
+                  />
+                )}
+              />
             </div>
             <div className="mt-5 relative">
-            { showPassword ? <i className="fa-solid fa-eye absolute text-primary top-5 right-10 cursor-pointer" onClick={()=>setShowPassword(prev => !prev)}></i> : <i className="fa-solid fa-eye-slash absolute text-primary top-5 right-10 cursor-pointer" onClick={()=>setShowPassword(prev => !prev)}></i> }
+              {showPassword ? (
+                <i
+                  className="fa-solid fa-eye absolute text-primary top-5 right-10 cursor-pointer"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                ></i>
+              ) : (
+                <i
+                  className="fa-solid fa-eye-slash absolute text-primary top-5 right-10 cursor-pointer"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                ></i>
+              )}
               <input
                 className="w-full text-lg text-primary py-3 border-b border-primary  focus:outline-none focus:border-indigo-500 placeholder:text-primary "
                 type={`${showPassword ? "text" : "password"}`}
@@ -150,7 +168,7 @@ function RegisterPage() {
                 id="password"
                 {...register("password")}
               />
-               <ErrorMessage
+              <ErrorMessage
                 errors={errors}
                 name="password"
                 render={({ message }) => (

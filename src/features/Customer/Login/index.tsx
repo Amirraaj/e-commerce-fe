@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { Alert, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Alert, Button, notification } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import loginImage from "../../../assets/Clothes/login.jpg";
 import { loginSchema } from "../../../validation/Customer";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
 import { ErrorMessage } from "@hookform/error-message";
-
+import { signIn } from "../../../api/Customer/index"
 type ContactUsFormData = z.infer<typeof loginSchema>;
 function LogInPage() {
+  const navigate = useNavigate();
   const [showPassword , setShowPassword] = useState(false)
   const {
     register,
@@ -21,9 +22,22 @@ function LogInPage() {
     mode: "onBlur", // "onChange"
   });
 
-  const onSubmit = (data: ContactUsFormData) => {
-    console.log(data, "sssssssssssssssssssssss");
-  };
+  const onSubmit = async(data: ContactUsFormData) => {
+    const res = await signIn(data);
+    if (res?.data?.status === 201) {
+      notification.success({
+        message: res?.data?.message,
+      });
+      localStorage.setItem("token", JSON.stringify(res?.data?.token));
+      
+      console.log(res?.data?.token,"sssssssssssssssssssss")
+      navigate('/');
+    }else{
+      notification.error({
+        message:res?.data?.message,
+      })
+    }
+  }
   return (
     <section className="flex justify-center items-center p-10 md:p-20  bg-secondary">
       <div
