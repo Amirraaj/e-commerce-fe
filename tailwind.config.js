@@ -9,6 +9,7 @@ module.exports = {
       secondaryPink: "#d9138a",
       dark: "#000",
       light: "#fff",
+      grey: "#D3D3D3",
     },
     screens: {
       'sm': '640px',

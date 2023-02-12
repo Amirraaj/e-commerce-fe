@@ -29,8 +29,6 @@ function LogInPage() {
         message: res?.data?.message,
       });
       localStorage.setItem("token", JSON.stringify(res?.data?.token));
-      
-      console.log(res?.data?.token,"sssssssssssssssssssss")
       navigate('/');
     }else{
       notification.error({

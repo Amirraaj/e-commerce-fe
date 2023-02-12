@@ -35,7 +35,7 @@ function Navbar() {
         setItem("");
       }
     }else{
-      console.log("notoken")
+      // notification.error({message:"An error occurred please try again later"})
     } 
   }, []);
 
@@ -46,12 +46,9 @@ function Navbar() {
 
   const getProfile = async () => {
     const profile = await getUserProfile(item);
-    console.log(profile.data.data.userName, "sssss");
+    console.log(profile?.data?.data?.userName, "sssss");
     setUser(profile?.data?.data?.userName);
   };
-
-  // console.log(user?.userName,"666666666666666666666")
-
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);

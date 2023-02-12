@@ -57,4 +57,32 @@
     font-weight: 500 !important;
     color: var(--clr-primary) !important;
 }
+.ant-menu {
+    height: 100vh;
+    width: 300px;
+    position: fixed;
+    padding: 10px;
+}
+
+.link{
+    list-style: none;
+    margin-top: 20px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 8px 25px;
+    border-radius: 11px;
+}
+.link:hover{
+    background-color: #4c339e;
+}
+
+.active{
+    background: var(--clr-secondary);
+}
+.ant-table-cell{
+    padding: 15px 0 !important;
+    font-size: 18px !important;
+}
 
