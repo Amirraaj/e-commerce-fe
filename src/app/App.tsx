@@ -28,8 +28,6 @@ function App() {
             <Route path="/adminproduct" element ={<ProductList/>} />
             <Route path="/adminproduct/create" element ={<AddProduct/>} />
             
-          
-          
         </Routes>
       </BrowserRouter>
     </div>

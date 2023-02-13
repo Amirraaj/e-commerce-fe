@@ -28,8 +28,12 @@ function RegisterPage() {
       notification.success({
         message: res?.data?.message,
       });
+      navigate("/");
+    }else{
+      notification.error({
+        message:"Registration Fail Please try again later !"
+      })
     }
-    navigate("/");
   };
   return (
     <section className="flex justify-center items-center p-10 bg-secondary">

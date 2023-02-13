@@ -44,7 +44,7 @@ const columns: ColumnsType<DataType> = [
     key: "action",
     render: (_, record) => (
       <Space size={50}>
-        <i className="fa-solid fa-pen-to-square text-primary fa-xl cursor-pointer hover:text-secondary"></i>
+        <i className="fa-solid fa-pen-to-square text-primary  cursor-pointer hover:text-secondary"></i>
         <Popconfirm
           title="Delete the task"
           description="Are you sure to delete this product?"
@@ -53,7 +53,7 @@ const columns: ColumnsType<DataType> = [
           cancelText="No"
           icon={<i className="fa-solid fa-circle-question text-[red]"></i>}
         >
-          <i className="fa-solid fa-trash text-primary fa-xl cursor-pointer hover:text-secondary"></i>
+          <i className="fa-solid fa-trash text-[#ed1d24]  cursor-pointer hover:text-[#d4353f]"></i>
         </Popconfirm>
       </Space>
     ),

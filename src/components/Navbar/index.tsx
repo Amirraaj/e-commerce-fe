@@ -6,6 +6,8 @@ import type { MenuProps } from "antd";
 import { Dropdown, Space } from "antd";
 import { getUserProfile } from "../../api/Customer/index";
 import "./style.css";
+import axios from "axios";
+const URL = process.env.REACT_APP_API_URL || "http://localhost:5000/";
 interface IUser {
   eamil: String;
   firstName: String;
@@ -26,29 +28,23 @@ function Navbar() {
   const [user, setUser] = useState("")
 
   useEffect(() => {
-    const hasToken = localStorage.getItem("token");
-    if (hasToken) {
-      const token = JSON.parse(localStorage.getItem("token") || "");
-      if (token) {
-        setItem(token);
-      }else{
-        setItem("");
-      }
-    }else{
-      // notification.error({message:"An error occurred please try again later"})
-    } 
-  }, []);
+    const token = localStorage?.getItem('token')
+    const data = async (token: string) => {
+      return await axios.get(URL + 'user/getUserByID', {
+        headers: {Authorization: `Bearer ${token}`}
+      })
+    }
+    if(token) {
+      console.log(token)
+      data(token).then(d => {
+        console.log(d.data.data.userName)
+        setUser(d.data.data.userName)
+      }).catch(e => console.log(e))
+    }
+  
 
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
-  const getProfile = async () => {
-    const profile = await getUserProfile(item);
-    console.log(profile?.data?.data?.userName, "sssss");
-    setUser(profile?.data?.data?.userName);
-  };
+  }, [localStorage?.getItem('token')])
+  
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -146,7 +142,7 @@ function Navbar() {
                 </Link>
               </ul>
 
-              {!item ? (
+              {!user ? (
                 <div className="flex justify-center items-center gap-5">
                   <Link to="/login">
                     <Button size="large">Log In</Button>

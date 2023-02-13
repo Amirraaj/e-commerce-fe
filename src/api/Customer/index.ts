@@ -10,8 +10,8 @@ export const signIn = (data: any) => {
   return axios.post(URL + "user/login", data);
 };
 
-export const getUserProfile = (token: any) => {
-  return axios.get(URL + "user/getUserByID", {
+export const getUserProfile = async (token: any) => {
+  return await axios.get(URL + "user/getUserByID", {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
