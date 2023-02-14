@@ -10,7 +10,7 @@ const NavItem =[
     },
     {
         label:"category",
-        route:"/"
+        route:"/admincategory"
     },
     {
         label:"Product",

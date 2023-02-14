@@ -1,51 +1,67 @@
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../../layout/Admin";
-import { Button, Space, Table, Tag, Popconfirm, notification } from "antd";
+import { Button, Space, Table, Tag, Popconfirm, notification, message } from "antd";
+import type { ColumnsType } from "antd/es/table";
 import { useNavigate } from "react-router-dom";
-import { deleteProduct, getAllProduct } from "../../../api/Admin";
-function AdminProduct() {
+import { getAllCategory, deleteCategory } from "../../../api/Admin";
+
+interface DataType {
+  key: string;
+  title: String;
+  description: Number;
+  color: String;
+}
+type ICategory = {
+    _id:any;
+    title:string;
+    description:string;
+    color:string;
+  }
+const data = [
+  {
+    title: "Women",
+    description: "Women Clothes",
+  },
+];
+
+
+
+function AdminCategory() {
   const navigate = useNavigate();
-  const [allProducts, setAllProducts] = useState([]);
+  const [category, setCategory]= useState([]);
 
   useEffect(() => {
-    getProducts()
-  }, []);
-  function click( id:string) {
-    deleteProduct(id).then(()=>{
-      notification.success({message:"Category deleted sucessfully"})
-      getProducts();
-  }).catch((err)=>{
-      notification.error({message:err})
-  })
+    getCategory();
+  },[category]);
+
+  function click (id:string) {
+    // notification.success({ message: id });
+    deleteCategory(id).then(()=>{
+        notification.success({message:"Category deleted sucessfully"})
+        getCategory();
+    }).catch((err)=>{
+        notification.error({message:err})
+    })
+
   }
+
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (text:any) => <a>{text}</a>,
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      render: (text: any) => <a>{text}</a>,
     },
     {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
     },
-    {
-      title: "Discount",
-      dataIndex: "discount",
-      key: "discount",
-      render: (text:any) => <a>{text? text: "-"}</a>,
-    },
-    {
-      title: "Category",
-      dataIndex: "category_id",
-      key: "category_id",
-      render: (item:any) => (<Tag color={"#AE9BC8"}>{Object.values(item.title)}</Tag>),
-    },
+    
     {
       title: "Action",
       key: "action",
-      render: (_:any, record:any) => (
+      render: (_: any, record: any) => (
         <Space size={50}>
           <i className="fa-solid fa-pen-to-square text-primary  cursor-pointer hover:text-secondary"></i>
           <Popconfirm
@@ -63,16 +79,12 @@ function AdminProduct() {
     },
   ];
 
-  const getProducts = async () => {
-    const products = await getAllProduct();
-    console.log(products.data.data,"hhhhhhh");
-    if(products?.data?.status === 200){
-      setAllProducts(products?.data?.data)
-    }
-  };
-
-  const addProd = () => {
-    navigate("/adminproduct/create");
+  const getCategory = async () =>{
+   const res = await getAllCategory();
+      setCategory(res?.data?.data)
+  }
+  const addCateg = () => {
+    navigate("/admincategory/create");
   };
   return (
     <AdminLayout>
@@ -80,15 +92,15 @@ function AdminProduct() {
         <div className="table bg-light w-full h-screen rounded-2xl p-10">
           <Table
             columns={columns}
-            dataSource={allProducts}
+            dataSource={category}
             title={() => (
               <div className="flex justify-between items-center">
                 {" "}
                 <h1 className="text-2xl text-primary font-medium">
                   Product
                 </h1>{" "}
-                <Button type="primary" size="large" onClick={() => addProd()}>
-                  + Add Product
+                <Button type="primary" size="large" onClick={() => addCateg()}>
+                  + Add Category
                 </Button>
               </div>
             )}
@@ -99,4 +111,4 @@ function AdminProduct() {
   );
 }
 
-export default AdminProduct;
+export default AdminCategory;

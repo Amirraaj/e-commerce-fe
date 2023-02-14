@@ -8,7 +8,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import { addProduct, getAllCategory } from "../../../api/Admin";
-import { wait } from "@testing-library/user-event/dist/utils";
 import { useNavigate } from "react-router-dom";
 
 
@@ -18,6 +17,7 @@ type ICategory = {
   _id:any;
   title:string;
   description:string;
+  color:string;
 }
 function AddProduct() {
   const [imageName, setImageName] = useState("");
@@ -28,9 +28,6 @@ function AddProduct() {
   useEffect(() => {
     getCategory();
   },[]);
-
-  
-
 
   const getCategory = async () =>{
    const res = await getAllCategory();

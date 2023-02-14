@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const productSchema = z.object({
+
   name: z
     .string({ invalid_type_error: "Product name is required" })
     .nonempty({ message: "Product name is required" })
@@ -34,3 +35,20 @@ export const productSchema = z.object({
 
   photo: z.string({ invalid_type_error: "Photo is required" }).nonempty({message:"Photo is required"}),
 });
+
+
+export const categorySchema = z.object({
+
+  title: z.string({ invalid_type_error: "Title is required" })
+  .nonempty({ message: "Title is required" })
+  .trim()
+  .min(2, { message: "Title should be atleast 2 characters" }),
+
+  description: z
+  .string({ invalid_type_error: "Description is required" })
+  .nonempty({ message: "Description is required" })
+  .trim()
+  .min(2, { message: "Description should be atleast 2 characters" }),
+
+  
+})
