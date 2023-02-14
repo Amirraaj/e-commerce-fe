@@ -21,7 +21,7 @@ export const productSchema = z.object({
 
   discount: z.string({ invalid_type_error: "Must be string" }).nullable(),
 
-  category: z
+  category_id: z
     .string({ invalid_type_error: "Catrgory is required" })
     .nonempty({ message: "Catrgory is required" })
     .trim()

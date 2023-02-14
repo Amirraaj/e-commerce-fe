@@ -7,17 +7,35 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
 import { ErrorMessage } from "@hookform/error-message";
+import { addProduct, getAllCategory } from "../../../api/Admin";
+import { wait } from "@testing-library/user-event/dist/utils";
+import { useNavigate } from "react-router-dom";
+
 
 type ProductFormData = z.infer<typeof productSchema>;
 
+type ICategory = {
+  _id:any;
+  title:string;
+  description:string;
+}
 function AddProduct() {
   const [imageName, setImageName] = useState("");
   const [isToched, setIsToched] = useState(false);
+  const [category, setCategory]= useState<ICategory[]| null>(null);
+ const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(imageName);
-  }, [imageName]);
+    getCategory();
+  },[]);
 
+  
+
+
+  const getCategory = async () =>{
+   const res = await getAllCategory();
+      setCategory(res?.data?.data)
+  }
   const {
     register,
     reset,
@@ -27,9 +45,14 @@ function AddProduct() {
     resolver: zodResolver(productSchema),
     mode: "onBlur", // "onChange"
   });
-  console.log(process.env.REACT_APP_IMAGE_PATH,"dyadavsduasdyasdy")
-  const onSubmit =  (data: ProductFormData) => {
-    console.log(data);
+  
+  const onSubmit = async (data: ProductFormData) => {
+    console.log(data, category, )
+    const res = await addProduct(data);
+     if(res?.data?.status === 201){
+      notification.success({message:res?.data?.message})
+      navigate("/adminproduct")
+     }
 
   };
 
@@ -153,18 +176,23 @@ function AddProduct() {
                   </label>
                   <select
                     className="shadow appearance-none border rounded cursor-pointer w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="category"
+                    id="category_id"
                     placeholder="Category"
-                    {...register("category")}
+                    {...register("category_id")}
                   >
                     <option value="">Category</option>
-                    <option value="Men">Men</option>
-                    <option value="Women">Women</option>
-                    <option value="Childrent">Childrent</option>
+                    {
+                      category?.map((item:any, index:any) =>{
+
+                        return(<option key={index} value={`${item._id}`}>{item.title}</option>)
+                      })
+                    }
+                    
+                   
                   </select>
                   <ErrorMessage
                     errors={errors}
-                    name="category"
+                    name="category_id"
                     render={({ message }) => (
                       <Alert
                         message={message}

@@ -35,7 +35,6 @@ function Navbar() {
       })
     }
     if(token) {
-      console.log(token)
       data(token).then(d => {
         console.log(d.data.data.userName)
         setUser(d.data.data.userName)
@@ -43,7 +42,7 @@ function Navbar() {
     }
   
 
-  }, [localStorage?.getItem('token')])
+  }, [localStorage?.getItem('token'), user])
   
 
   useEffect(() => {
@@ -71,6 +70,7 @@ function Navbar() {
       localStorage.clear();
       setItem("");
       notification.success({message:"Log out Sucessfull"})
+      setUser('');
     }
   };
 
@@ -142,7 +142,7 @@ function Navbar() {
                 </Link>
               </ul>
 
-              {!user ? (
+              { !user ? (
                 <div className="flex justify-center items-center gap-5">
                   <Link to="/login">
                     <Button size="large">Log In</Button>

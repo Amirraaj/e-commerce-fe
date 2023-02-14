@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AdminLayout from "../../../layout/Admin";
 import { Button, Space, Table, Tag, Popconfirm, notification } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useNavigate } from "react-router-dom";
-
+import { getAllProduct } from "../../../api/Admin";
 interface DataType {
   key: string;
   name: String;
@@ -11,8 +11,8 @@ interface DataType {
   discount: String;
   category: String;
 }
-function click(){
-    notification.success({message:"clicked"})
+function click() {
+  notification.success({ message: "clicked" });
 }
 const columns: ColumnsType<DataType> = [
   {
@@ -30,14 +30,13 @@ const columns: ColumnsType<DataType> = [
     title: "Discount",
     dataIndex: "discount",
     key: "discount",
+    render: (text) => <a>{text? text: "-"}</a>,
   },
   {
     title: "Category",
-    dataIndex: "category",
-    key: "category",
-    render: (_, { category }) => (
-      <Tag color={"#AE9BC8"}>{category.toUpperCase()}</Tag>
-    ),
+    dataIndex: "category_id",
+    key: "category_id",
+    render: item => (<Tag color={"#AE9BC8"}>{Object.values(item.title)}</Tag>),
   },
   {
     title: "Action",
@@ -60,147 +59,41 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data = [
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "-",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "-",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "5%",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "-",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "10%",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "-",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "3%",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "-",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "-",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "10%",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "-",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "30%",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "-",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "20%",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "-",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "-",
-    category: "men",
-  },
-  {
-    key: "1",
-    name: "Hoodie",
-    price: 400,
-    discount: "5%",
-    category: "men",
-  },
-];
+
 
 function AdminProduct() {
- const navigate = useNavigate()
-  const addProd = () =>{
-     navigate("/adminproduct/create")
-  }
+  const navigate = useNavigate();
+  const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(() => {
+    getProducts()
+  }, []);
+
+  const getProducts = async () => {
+    const products = await getAllProduct();
+    console.log(products.data.data,"hhhhhhh");
+    if(products?.data?.status === 200){
+      setAllProducts(products?.data?.data)
+    }
+  };
+
+  const addProd = () => {
+    navigate("/adminproduct/create");
+  };
   return (
     <AdminLayout>
       <section className="py-10 px-14">
         <div className="table bg-light w-full h-screen rounded-2xl p-10">
           <Table
             columns={columns}
-            dataSource={data}
+            dataSource={allProducts}
             title={() => (
               <div className="flex justify-between items-center">
                 {" "}
                 <h1 className="text-2xl text-primary font-medium">
                   Product
                 </h1>{" "}
-                <Button type="primary" size="large" onClick={()=>addProd()}>
+                <Button type="primary" size="large" onClick={() => addProd()}>
                   + Add Product
                 </Button>
               </div>
