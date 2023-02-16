@@ -32,7 +32,7 @@ function AdminCategory() {
 
   useEffect(() => {
     getCategory();
-  },[category]);
+  },[]);
 
   function click (id:string) {
     // notification.success({ message: id });
@@ -43,6 +43,10 @@ function AdminCategory() {
         notification.error({message:err})
     })
 
+  }
+
+  function handelEdit( id:string){
+      navigate(`/admincategory/edit/${id}`)
   }
 
   const columns = [
@@ -63,7 +67,7 @@ function AdminCategory() {
       key: "action",
       render: (_: any, record: any) => (
         <Space size={50}>
-          <i className="fa-solid fa-pen-to-square text-primary  cursor-pointer hover:text-secondary"></i>
+          <i className="fa-solid fa-pen-to-square text-primary  cursor-pointer hover:text-secondary" onClick={() => handelEdit(record._id)}></i>
           <Popconfirm
             title="Delete the task"
             description="Are you sure to delete this product?"

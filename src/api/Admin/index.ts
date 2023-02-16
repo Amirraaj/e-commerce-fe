@@ -16,6 +16,10 @@ export const deleteProduct = async (id: string) => {
   return await axios.delete(URL + `product/${id}`);
 };
 
+export const getProductById = async (id: any) => {
+  return await axios.get(URL + `product/${id}`);  
+};
+
 // category api
 
 export const getAllCategory = async () => {
@@ -30,9 +34,9 @@ export const deleteCategory = async (id: string) => {
 };
 
 export const editCategory = async (id: any, user: any) => {
-  return await axios.put(URL + `category/${id.id}`, user);
+  return await axios.put(URL + `category/${id}`, user);
 };
 
 export const getOneCategory = async (id: any) => {
-  return await axios.get(URL + `category/${id.id}`);
+  return await axios.get(URL + `category/${id}`);
 };

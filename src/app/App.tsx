@@ -12,6 +12,8 @@ import ProductList from "../pages/Admin/Product";
 import AddProduct from "../features/Admin/Product/addProduct";
 import Category from "../pages/Admin/Category";
 import AddCategory from "../features/Admin/Category/addCategory";
+import EditCategory from "../features/Admin/Category/editCategory";
+import EditProduct from "../features/Admin/Product/editProduct";
 
 function App() {
   return (
@@ -29,9 +31,10 @@ function App() {
             <Route path="/admin" element ={<AdminHome/>} />
             <Route path="/adminproduct" element ={<ProductList/>} />
             <Route path="/adminproduct/create" element ={<AddProduct/>} />
+            <Route path="/adminproduct/edit/:id" element ={<EditProduct/>} />
             <Route path="/admincategory" element ={<Category/>} />
             <Route path="/admincategory/create" element ={<AddCategory/>} />
-            {/* <Route path="/admincategory/create/:id" element ={<AddCategory/>} /> */}
+            <Route path="/admincategory/edit/:id" element ={<EditCategory/>} />
             
         </Routes>
       </BrowserRouter>

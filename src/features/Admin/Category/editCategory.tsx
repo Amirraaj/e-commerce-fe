@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AdminLayout from "../../../layout/Admin";
 import { categorySchema } from "../../../validation/Admin";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
 import { ErrorMessage } from "@hookform/error-message";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Col, Row, Alert, Button, Dropdown, Input, notification } from "antd";
-import { addCategory } from "../../../api/Admin";
+import { getOneCategory, editCategory } from "../../../api/Admin";
 import KJInput from "../../../constants/KJInput";
 import KJTextarea from "../../../constants/KJTextArea";
-
 type ProductFormData = z.infer<typeof categorySchema>;
 
-function AddCategory() {
+
+function EditCategory() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [category, setCategory] = useState<any>({title:"", description:""});
+
 
   const {
     register,
@@ -26,14 +29,31 @@ function AddCategory() {
     resolver: zodResolver(categorySchema),
     mode: "onBlur", // "onChange"
   });
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() =>{
+    if(category){
+      reset({
+        title: category?.title,
+        description: category?.description,
+      })
+    }
+  },[category, reset])
+
+  const getData = async () => {
+    const res = await getOneCategory(id);
+    setCategory(res?.data?.data)
+  };
+  
   const onSubmit = async (data: ProductFormData) => {
-    const res = await addCategory(data);
-    if (res?.data?.status === 201) {
-      console.log(res?.data?.status, "kdsjdgjagjdgajsgdas");
-      notification.success({ message: res?.data?.message });
-      navigate("/adminCategory");
-    } else {
-      notification.error({ message: res?.data?.message });
+    const  res = await editCategory(id, data);
+    console.log(res)
+    if(res?.data?.status === 201){
+      notification.success({message:res?.data?.message});
+      navigate("/admincategory")
     }
   };
 
@@ -42,7 +62,7 @@ function AddCategory() {
       <section className="py-10 px-14">
         <div className="table bg-light w-full h-screen rounded-2xl p-10">
           <h1 className="text-2xl text-primary text-medium">
-            Add Category Product
+            Edit Category
           </h1>
           <form className="my-5" onSubmit={handleSubmit(onSubmit)}>
             <Row gutter={16}>
@@ -78,7 +98,7 @@ function AddCategory() {
               </Col>
             </Row>
             <Button htmlType="submit" size="large" className="mt-2">
-              + Add Category
+               Edit Category
             </Button>
           </form>
         </div>
@@ -87,4 +107,4 @@ function AddCategory() {
   );
 }
 
-export default AddCategory;
+export default EditCategory;

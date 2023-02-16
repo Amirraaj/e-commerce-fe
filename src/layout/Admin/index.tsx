@@ -9,7 +9,7 @@ const NavItem =[
         route:"/Admin"
     },
     {
-        label:"category",
+        label:"Category",
         route:"/admincategory"
     },
     {

@@ -3,13 +3,16 @@ import React, { useState } from "react";
 import { Upload, notification } from "antd";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 
+interface Image {
+  setImageName:any;
+  setPicture?:any;
+}
 
 
-const App = ({setImageName}:any) => {
+const App: React.FC <Image> = ({setImageName, setPicture}) => {
   const [uploadNewFile, setNewUploadFile] = useState<boolean>(true);
   const onChange: UploadProps["onChange"] = (info: any) => {
     if (info.file.status !== "uploading") {
-       
     }
     if (info.file.status === "done") {
       notification.success({ message: "File upload sucessfully" });
@@ -36,16 +39,18 @@ const App = ({setImageName}:any) => {
   };
 
   return (
+    <>
     <Upload
       name="imageFile"
       action="http://localhost:5000/product/upload"
       listType="picture-card"
       onChange={onChange}
-      onPreview={onPreview}
-      
+      onPreview={onPreview} 
     >
       { uploadNewFile && "+ Upload"}
     </Upload>
+    
+    </>
   );
 };
 

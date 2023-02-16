@@ -18,6 +18,10 @@ function AdminProduct() {
       notification.error({message:err})
   })
   }
+
+  const handelEdit = (id:string) =>{
+      navigate(`/adminproduct/edit/${id}`)
+  }
   const columns = [
     {
       title: "Name",
@@ -47,7 +51,7 @@ function AdminProduct() {
       key: "action",
       render: (_:any, record:any) => (
         <Space size={50}>
-          <i className="fa-solid fa-pen-to-square text-primary  cursor-pointer hover:text-secondary"></i>
+          <i className="fa-solid fa-pen-to-square text-primary  cursor-pointer hover:text-secondary" onClick={() => handelEdit(record._id)}></i>
           <Popconfirm
             title="Delete the task"
             description="Are you sure to delete this product?"
