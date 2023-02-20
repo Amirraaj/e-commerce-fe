@@ -15,6 +15,8 @@ import AddCategory from "../features/Admin/Category/addCategory";
 import EditCategory from "../features/Admin/Category/editCategory";
 import EditProduct from "../features/Admin/Product/editProduct";
 import UserDatails from "../pages/Admin/UserDetails";
+import AllProducts from "../pages/Customer/AllProducts";
+
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
             <Route path="/product/:id" element={<Product/>} />
             <Route path="/login" element={<LogIn/>} />
             <Route path="/register" element={<Register/>} />
+            <Route path="/allproducts" element={<AllProducts/>} />
+
 
             {/* admin portal routes */}
             <Route path="/admin" element ={<AdminHome/>} />

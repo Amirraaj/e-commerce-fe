@@ -36,7 +36,6 @@ function Navbar() {
     }
     if(token) {
       data(token).then(d => {
-        console.log(d.data.data.userName)
         setUser(d.data.data.userName)
       }).catch(e => console.log(e))
     }
@@ -137,7 +136,7 @@ function Navbar() {
                 <Link to="/" className="nav-link">
                   <li className="nav-item">what's new</li>
                 </Link>
-                <Link to="/" className="nav-link">
+                <Link to="/allproducts" className="nav-link">
                   <li className="nav-item">Products</li>
                 </Link>
               </ul>

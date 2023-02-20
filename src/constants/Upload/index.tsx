@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import { Upload, notification } from "antd";
+import ImgCrop from 'antd-img-crop';
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 
 interface Image {
@@ -41,6 +42,13 @@ const App: React.FC <Image> = ({setImageName, setPicture}) => {
 
   return (
     <>
+    <ImgCrop 
+    aspect={2/3}
+    modalTitle="Crop Image"
+    modalOk="Crop"
+    modalCancel="Cancel"
+    fillColor="transparent"
+    >
     <Upload
       name="imageFile"
       action="http://localhost:5000/product/upload"
@@ -50,7 +58,7 @@ const App: React.FC <Image> = ({setImageName, setPicture}) => {
     >
       {"+ Upload"}
     </Upload>
-    
+    </ImgCrop>
     </>
   );
 };
