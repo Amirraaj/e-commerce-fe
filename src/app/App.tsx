@@ -14,6 +14,7 @@ import Category from "../pages/Admin/Category";
 import AddCategory from "../features/Admin/Category/addCategory";
 import EditCategory from "../features/Admin/Category/editCategory";
 import EditProduct from "../features/Admin/Product/editProduct";
+import UserDatails from "../pages/Admin/UserDetails";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
             {/* customer portal routes */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/product" element={<Product/>} />
+            <Route path="/product/:id" element={<Product/>} />
             <Route path="/login" element={<LogIn/>} />
             <Route path="/register" element={<Register/>} />
 
@@ -35,7 +36,7 @@ function App() {
             <Route path="/admincategory" element ={<Category/>} />
             <Route path="/admincategory/create" element ={<AddCategory/>} />
             <Route path="/admincategory/edit/:id" element ={<EditCategory/>} />
-            
+            <Route path="/adminuser" element={<UserDatails/>} />
         </Routes>
       </BrowserRouter>
     </div>

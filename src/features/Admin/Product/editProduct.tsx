@@ -76,8 +76,9 @@ function EditProduct() {
         discount: product?.discount,
         photo: product?.photo,
       });
+      setImageName(product?.photo)
     }
-  }, [product, reset]);
+  }, [product, reset, imageName]);
 
   const onSubmit = async (data: ProductFormData) => {
     console.log(data, category, "data from form");

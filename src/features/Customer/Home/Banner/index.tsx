@@ -4,14 +4,16 @@ import landingImage from "../../../../assets/Home/landingImage.png";
 import landingSecondaryImage from "../../../../assets/Home/New1.png";
 import ThirdImage from "../../../../assets/Home/new2.png";
 import ForthImage from "../../../../assets/Home/new3.png";
+
+
 function Banner() {
+
+
   let i:number;
   const ImageList =[landingImage,landingSecondaryImage,ThirdImage,ForthImage]
   const[currentImage, setCurrentImage] = useState(ImageList[0]);
   function startImageTransition(){
-     
   }
-  
 
   return (
     <section className="Banner-section">

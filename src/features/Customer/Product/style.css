@@ -7,7 +7,7 @@
 .bg-holder{
     position: relative;
     width: 80%;
-    background-color:var(--clr-primary);
+    background-color:var(--clr-light);
     height: 100vh;
 }
 .White-wrapper{
@@ -30,7 +30,6 @@
     position: absolute;
     height: 80%;
     top: 10%;
-    width: 55%;
     left: 43%;
     padding: 10px;
 }
@@ -120,6 +119,34 @@
     content: '';
     background-color: aliceblue;
 }
+
+.product-image-holder .ribbon {
+    position: absolute;
+    width: 40px;
+    height: 60px;
+    top: 0;
+    left:20px;
+    background: var(--clr-primary);
+  }
+  .product-image-holder .ribbon-2{
+    position: absolute;
+    top:40px;
+    left: 0;
+    width: 0; 
+    height: 20px; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid var(--clr-secondary);
+    background: var(--clr-primary);
+  }
+  .product-image-holder .discount-text{
+    position: absolute;
+    color: #fff;
+    top: 10px;
+    left: 10px;
+    font-size: 14px;
+    font-weight: 500;
+  }
 
 @media (max-width:1150px){
     .info-holder{

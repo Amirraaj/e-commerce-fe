@@ -15,3 +15,4 @@ export const getUserProfile = async (token: any) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+

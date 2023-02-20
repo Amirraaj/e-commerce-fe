@@ -16,24 +16,23 @@ import KJSelect from "../../../constants/KJSelect";
 type ProductFormData = z.infer<typeof productSchema>;
 
 type ICategory = {
-  _id:any;
-  title:string;
-  description:string;
-}
+  _id: any;
+  title: string;
+  description: string;
+};
 function AddProduct() {
   const [imageName, setImageName] = useState("");
-  const [isToched, setIsToched] = useState(false);
-  const [category, setCategory]= useState<ICategory[]| null>(null);
- const navigate = useNavigate();
+  const [category, setCategory] = useState<ICategory[] | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCategory();
-  },[]);
+  }, []);
 
-  const getCategory = async () =>{
-   const res = await getAllCategory();
-      setCategory(res?.data?.data)
-  }
+  const getCategory = async () => {
+    const res = await getAllCategory();
+    setCategory(res?.data?.data);
+  };
   const {
     register,
     reset,
@@ -44,151 +43,155 @@ function AddProduct() {
     resolver: zodResolver(productSchema),
     mode: "onBlur", // "onChange"
   });
-  
-  const onSubmit = async (data: ProductFormData) => {
-    console.log(data, category, )
-    const res = await addProduct(data);
-     if(res?.data?.status === 201){
-      notification.success({message:res?.data?.message})
-      navigate("/adminproduct")
-     }
 
+  useEffect(() => {
+    if (imageName) {
+      reset({
+        photo: imageName,
+      });
+    }
+  }, [reset, imageName]);
+
+  const onSubmit = async (data: ProductFormData) => {
+    console.log(data, category);
+    const res = await addProduct(data);
+    if (res?.data?.status === 201) {
+      notification.success({ message: res?.data?.message });
+      navigate("/adminproduct");
+    }
   };
 
   return (
     <AdminLayout>
-    <section className="py-10 px-14">
-      <div className="table bg-light w-full h-screen rounded-2xl p-10">
-        <h1 className="text-2xl text-primary text-medium">Add new Product</h1>
-        <form className="my-5" onSubmit={handleSubmit(onSubmit)}>
-          <Row gutter={16}>
-            <Col span={12}>
-              <KJInput
-                name="name"
-                control={control}
-                label="Name"
-                parentClass=""
-                register={register}
-                labelClass="block text-gray-700 text-sm font-medium mb-2"
-                error={errors}
-                placeholder="Product Name"
-                required
-                inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </Col>
-            <Col span={12}>
-              <KJInput
-                name="price"
-                control={control}
-                register={register}
-                label="Price"
-                parentClass=""
-                labelClass="block text-gray-700 text-sm font-medium mb-2"
-                error={errors}
-                placeholder="Price"
-                required
-                inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={24}>
-              <KJInput
-                name="intro"
-                control={control}
-                register={register}
-                label="Intro"
-                parentClass=""
-                labelClass="block text-gray-700 text-sm font-medium mb-2"
-                error={errors}
-                placeholder="Intro"
-                required
-                inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={24}>
-              <KJTextarea
-                name="description"
-                control={control}
-                register={register}
-                label="Description"
-                parentClass=""
-                labelClass="block text-gray-700 text-sm font-medium mb-2"
-                error={errors}
-                placeholder="Description"
-                required
-                inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <KJSelect
-                name="category_id"
-                control={control}
-                register={register}
-                label="Category"
-                parentClass=""
-                labelClass="block text-gray-700 text-sm font-medium mb-2"
-                error={errors}
-                optionArray={category}
-                placeholder="Category"
-                required
-                inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </Col>
-            <Col span={12}>
-              <KJInput
-                name="discount"
-                control={control}
-                register={register}
-                label="Discount"
-                parentClass=""
-                labelClass="block text-gray-700 text-sm font-medium mb-2"
-                error={errors}
-                placeholder="Discount"
-                inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col span={6}>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-medium mb-2">
-                  Photo *
-                </label>
-                <UploadImage
-                  setImageName={setImageName}
+      <section className="py-10 px-14">
+        <div className="table bg-light w-full h-screen rounded-2xl p-10">
+          <h1 className="text-2xl text-primary text-medium">Add new Product</h1>
+          <form className="my-5" onSubmit={handleSubmit(onSubmit)}>
+            <Row gutter={16}>
+              <Col span={12}>
+                <KJInput
+                  name="name"
+                  control={control}
+                  label="Name"
+                  parentClass=""
+                  register={register}
+                  labelClass="block text-gray-700 text-sm font-medium mb-2"
+                  error={errors}
+                  placeholder="Product Name"
+                  required
+                  inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                <input
-                  type="text"
-                  value={imageName}
-                  {...register("photo")}
-                  className="w-[0.1px]"
+              </Col>
+              <Col span={12}>
+                <KJInput
+                  name="price"
+                  control={control}
+                  register={register}
+                  label="Price"
+                  parentClass=""
+                  labelClass="block text-gray-700 text-sm font-medium mb-2"
+                  error={errors}
+                  placeholder="Price"
+                  required
+                  inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="photo"
-                  render={({ message }) => (
-                    <Alert
-                      message={message}
-                      type="error"
-                      className="mt-2 text-center"
-                    />
-                  )}
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={24}>
+                <KJInput
+                  name="intro"
+                  control={control}
+                  register={register}
+                  label="Intro"
+                  parentClass=""
+                  labelClass="block text-gray-700 text-sm font-medium mb-2"
+                  error={errors}
+                  placeholder="Intro"
+                  required
+                  inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-              </div>
-            </Col>
-          </Row>
-          <Button htmlType="submit" size="large" className="mt-2">
-            + Add Product
-          </Button>
-        </form>
-      </div>
-    </section>
-  </AdminLayout>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={24}>
+                <KJTextarea
+                  name="description"
+                  control={control}
+                  register={register}
+                  label="Description"
+                  parentClass=""
+                  labelClass="block text-gray-700 text-sm font-medium mb-2"
+                  error={errors}
+                  placeholder="Description"
+                  required
+                  inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <KJSelect
+                  name="category_id"
+                  control={control}
+                  register={register}
+                  label="Category"
+                  parentClass=""
+                  labelClass="block text-gray-700 text-sm font-medium mb-2"
+                  error={errors}
+                  optionArray={category}
+                  placeholder="Category"
+                  required
+                  inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </Col>
+              <Col span={12}>
+                <KJInput
+                  name="discount"
+                  control={control}
+                  register={register}
+                  label="Discount"
+                  parentClass=""
+                  labelClass="block text-gray-700 text-sm font-medium mb-2"
+                  error={errors}
+                  placeholder="Discount"
+                  inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col span={6}>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-medium mb-2">
+                    Photo *
+                  </label>
+                  <input
+                    type="text"
+                    {...register("photo")}
+                    className="w-[0.1px]"
+                  />
+                  <UploadImage setImageName={setImageName} />
+                  <ErrorMessage
+                    errors={errors}
+                    name="photo"
+                    render={({ message }) => (
+                      <Alert
+                        message={message}
+                        type="error"
+                        className="mt-2 text-center"
+                      />
+                    )}
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Button htmlType="submit" size="large" className="mt-2">
+              + Add Product
+            </Button>
+          </form>
+        </div>
+      </section>
+    </AdminLayout>
   );
 }
 

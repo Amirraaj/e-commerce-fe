@@ -18,7 +18,7 @@ const NavItem =[
     },
     {
         label:"UsersDetails",
-        route:"/"
+        route:"/adminuser"
     },
 ]
 
@@ -46,7 +46,7 @@ function AdminLayout({
                   className={({ isActive }) =>
                     isActive ? "link active " : "link"
                   }
-                >
+                > 
                   {item.label}
                 </NavLink>
             );

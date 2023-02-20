@@ -10,6 +10,8 @@ function AdminProduct() {
   useEffect(() => {
     getProducts()
   }, []);
+
+  
   function click( id:string) {
     deleteProduct(id).then(()=>{
       notification.success({message:"Category deleted sucessfully"})

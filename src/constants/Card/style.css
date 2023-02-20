@@ -34,7 +34,7 @@
 .ribbon-2{
   position: absolute;
   top:40px;
-  left:1px;
+  left:0px;
   width: 0; 
   height: 20px; 
   border-left: 20px solid transparent;

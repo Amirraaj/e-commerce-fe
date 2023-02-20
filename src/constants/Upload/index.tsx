@@ -11,12 +11,13 @@ interface Image {
 
 const App: React.FC <Image> = ({setImageName, setPicture}) => {
   const [uploadNewFile, setNewUploadFile] = useState<boolean>(true);
+
   const onChange: UploadProps["onChange"] = (info: any) => {
     if (info.file.status !== "uploading") {
     }
     if (info.file.status === "done") {
       notification.success({ message: "File upload sucessfully" });
-      setImageName(info.file.response.filename);
+      setImageName(info?.file?.response?.data);
     } else if (info.file.status === "error") {
       notification.error({ message: "file upload failed." });
     }
@@ -47,7 +48,7 @@ const App: React.FC <Image> = ({setImageName, setPicture}) => {
       onChange={onChange}
       onPreview={onPreview} 
     >
-      { uploadNewFile && "+ Upload"}
+      {"+ Upload"}
     </Upload>
     
     </>

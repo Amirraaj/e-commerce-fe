@@ -5,7 +5,7 @@ import Layout from "../../../layout/Customer"
 function Product() {
   return (
     <Layout>
-        <ProductPage/>
+        <ProductPage />
     </Layout>
   )
 }
