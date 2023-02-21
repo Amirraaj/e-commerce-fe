@@ -3,7 +3,7 @@ import Card from "../../../constants/Card";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { IProduct } from "../../../types";
+import { ICard, IProduct } from "../../../types";
 
 type ISlider = {
   title: string;
@@ -11,6 +11,7 @@ type ISlider = {
 };
 
 function ClothesSlider({ title, similarProducts }: ISlider) {
+  console.log(similarProducts,"ssshdkash akjbsjakjsd kkjsgas bj")
   const sliderRef = useRef(null);
   const next = () => {
     // @ts-ignore
@@ -72,12 +73,13 @@ function ClothesSlider({ title, similarProducts }: ISlider) {
       ></i>
       <h1 className="Heading  text-2xl font-semibold text-primary ">{title}</h1>
       <Slider ref={sliderRef} {...sliderSettings}>
-        { similarProducts?.map((product: IProduct) => {
+        { similarProducts?.map((product: ICard) => {
           return (
             <Card
               key={product._id}
-              title={product.name}
-              image={product.photo}
+              _id={product._id}
+              name={product.name}
+              photo={product.photo}
               intro={product.intro}
               price={product.price}
               discount={product.discount}

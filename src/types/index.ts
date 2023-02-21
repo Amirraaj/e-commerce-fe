@@ -12,3 +12,12 @@ export type IProduct = {
     description: string;
   };
 };
+
+export type ICard = {
+  _id: string;
+  name: string;
+  intro: string;
+  photo: string;
+  price: number;
+  discount: string;
+};

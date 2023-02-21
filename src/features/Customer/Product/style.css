@@ -17,26 +17,32 @@
 }
 .product-image-holder{
     position: absolute;
-    width: 50%;
+    width: 40%;
     background-color:var(--clr-secondary) ;
-    height:80%;
+    height:70%;
     top:10%;
     left: -10%;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition:all 500ms
+}
+.product-image-holder:hover .product-image{
+    
+    transform: scale(1.1) translateY(-40px);
 }
 .Content-holder{
     position: absolute;
     height: 80%;
     top: 10%;
-    left: 43%;
+    left: 36%;
     padding: 10px;
 }
 .product-image{
     width: 90%;
     height: 90%;
     object-fit: contain;
+    transition:all 500ms
     
 }
 .product-image-container{

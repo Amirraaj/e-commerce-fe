@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, Radio, Space, Slider } from "antd";
+import { Col, Row, Radio, Space, Slider, Input } from "antd";
 import type { SliderMarks } from "antd/es/slider";
 import type { RadioChangeEvent } from "antd";
 import Card from "../../../constants/Card";
 import Layout from "../../../layout/Customer";
 import { getAllProducts } from "../../../api/Customer/product";
 import { Link } from "react-router-dom";
+import { AudioOutlined } from "@ant-design/icons";
+import { IProduct } from "../../../types";
 
 function AllProductsDisplay() {
   const [value, setValue] = useState(1);
-  const [productArray, setProductArray] = useState<any>();
+  const [productArray, setProductArray] = useState<IProduct[]>();
 
   useEffect(() => {
     allProduct();
   }, []);
-  
+
   const allProduct = async () => {
     const products = await getAllProducts();
     setProductArray(products?.data?.data);
@@ -32,15 +34,31 @@ function AllProductsDisplay() {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
+  const { Search } = Input;
+
+  const suffix = (
+    <AudioOutlined
+      style={{
+        fontSize: 19,
+        color: "#1890ff",
+      }}
+    />
+  );
+
+  const onSearch = (value: string) => console.log(value);
 
   return (
     <Layout>
-      <section className="flex">
-        <div className=" py-14 pl-5 relative  min-w-[22rem] max-w-[22rem] ">
-          <div className="p-2 bg-[#e4eaf5] pb-32 rounded-3xl px-7 !sticky top-0">
+      <section className="flex relative">
+        <div className=" py-14 pl-5 min-w-[22rem] max-w-[22rem] fixed">
+          <div className="p-2 bg-[#e4eaf5] pb-10 rounded-3xl px-7">
             <span className="text-3xl font-medium flex justify-center items-center mt-5">
               <i className="fa-solid fa-filter"></i> Filter
             </span>
+            <div className="mt-5 flex flex-col items-start">
+              <span className="text-lg font-medium">Search</span>
+              <Search placeholder="search ..." size="large" className="border-none rounded mt-3 text-gray-700 leading-tight" allowClear onSearch={onSearch} />
+            </div>
             <div className="mt-5 flex flex-col items-start">
               <span className="text-lg font-medium">Category</span>
               <Radio.Group onChange={onChange} value={value} className="mt-3">
@@ -60,7 +78,7 @@ function AllProductsDisplay() {
                 range
                 marks={marks}
                 className="w-full mt-3"
-                defaultValue={[0, 40]}
+                defaultValue={[0, 0]}
               />
             </div>
             <div className="mt-5 flex flex-col items-start">
@@ -71,19 +89,25 @@ function AllProductsDisplay() {
                 range
                 marks={marks}
                 className="w-full mt-3"
-                defaultValue={[0, 10]}
+                defaultValue={[0, 0]}
               />
             </div>
           </div>
         </div>
-        <div className=" p-14 flex gap-10">
+        <div className=" p-14 flex gap-10 ml-[22rem]">
           <Row gutter={[24, 50]}>
-            {productArray?.map((item: any, index: any) => {
+            {productArray?.map((item: IProduct, index: number) => {
               return (
                 <Col span={8} key={index}>
-                  <Link to={`/product/${item._id}`}>
-                    <Card image={item.photo} title={item.name} intro={item.intro} discount={item.discount} price={item.price}/>
-                  </Link>
+                    <Card
+                      _id={item._id}
+                      photo={item.photo}
+                      name={item.name}
+                      intro={item.intro}
+                      discount={item.discount}
+                      price={item.price}
+                    />
+                  
                 </Col>
               );
             })}
