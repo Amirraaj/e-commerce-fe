@@ -3,19 +3,23 @@ import Card from "../../../constants/Card";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-//@ts-ignore
-function ClothesSlider({title}) {
+import { IProduct } from "../../../types";
 
+type ISlider = {
+  title: string;
+  similarProducts?: IProduct[];
+};
+
+function ClothesSlider({ title, similarProducts }: ISlider) {
   const sliderRef = useRef(null);
-  const  next = () =>{
-      // @ts-ignore
+  const next = () => {
+    // @ts-ignore
     sliderRef?.current?.slickNext();
-  }
-  const  prev = () =>{
-      // @ts-ignore
+  };
+  const prev = () => {
+    // @ts-ignore
     sliderRef?.current?.slickPrev();
-  }
-
+  };
 
   const sliderSettings = {
     slidesToShow: 4,
@@ -23,7 +27,7 @@ function ClothesSlider({title}) {
     slidesToScroll: 1,
     speed: 500,
     touchMove: true,
-    // infinite: true,
+    infinite: true,
     // autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,
@@ -56,16 +60,30 @@ function ClothesSlider({title}) {
   };
   return (
     <div className="px-24 my-10 relative">
-      <i className="fa-solid fa-circle-arrow-right absolute text-primary text-3xl top-[21rem] right-10 z-10 cursor-pointer hover:text-4xl" style={{ transition:"all 300ms" }} onClick={next}></i>
-      <i className="fa-solid fa-circle-arrow-left absolute text-primary text-3xl top-[21rem] left-10 z-10 cursor-pointer hover:text-4xl" style={{ transition:"all 300ms" }} onClick={prev}></i>
+      <i
+        className="fa-solid fa-circle-arrow-right absolute text-primary text-3xl top-[21rem] right-10 z-10 cursor-pointer hover:text-4xl"
+        style={{ transition: "all 300ms" }}
+        onClick={next}
+      ></i>
+      <i
+        className="fa-solid fa-circle-arrow-left absolute text-primary text-3xl top-[21rem] left-10 z-10 cursor-pointer hover:text-4xl"
+        style={{ transition: "all 300ms" }}
+        onClick={prev}
+      ></i>
       <h1 className="Heading  text-2xl font-semibold text-primary ">{title}</h1>
-      <Slider ref={sliderRef} {...sliderSettings} >
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+      <Slider ref={sliderRef} {...sliderSettings}>
+        { similarProducts?.map((product: IProduct) => {
+          return (
+            <Card
+              key={product._id}
+              title={product.name}
+              image={product.photo}
+              intro={product.intro}
+              price={product.price}
+              discount={product.discount}
+            />
+          );
+        })}
       </Slider>
     </div>
   );

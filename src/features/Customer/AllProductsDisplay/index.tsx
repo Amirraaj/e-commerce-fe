@@ -14,8 +14,7 @@ function AllProductsDisplay() {
   useEffect(() => {
     allProduct();
   }, []);
-   console.log(productArray)
-
+  
   const allProduct = async () => {
     const products = await getAllProducts();
     setProductArray(products?.data?.data);

@@ -3,15 +3,18 @@ import landingImage from "../../../assets/Clothes/kindpng_623334.png";
 import { Button } from "antd";
 import ClothesSlider from "../ClothesSlider";
 import { useParams } from "react-router-dom";
-import { getProductById } from "../../../api/Customer/product";
+import { getProductById, getProductByCategory } from "../../../api/Customer/product";
 import { useEffect, useState } from "react";
+import { IProduct } from "../../../types";
 
 function ProductPage() {
    const {id} = useParams()
-   const [productDetails , setProductDetails] = useState<any>();
+   const [productDetails , setProductDetails] = useState<IProduct>();
+   const [simailarProducts , setSimilarProducts] = useState<IProduct[]>();
 
    useEffect(() =>{
       getProduct()
+      ProductWithCategory()
    },[])
    useEffect(() => {
     window.scrollTo(0, 0)
@@ -22,6 +25,11 @@ function ProductPage() {
     setProductDetails(res?.data?.data)
    }
 
+   const ProductWithCategory = async() =>{
+    const res = await getProductByCategory(productDetails?.category_id?._id);
+    setSimilarProducts(res?.data?.data)
+   }
+     const similarWithFilter = simailarProducts?.filter((product:IProduct) => product._id !== id)
   return (
     <div>
     <section className="Cover-section">
@@ -98,7 +106,8 @@ function ProductPage() {
         </div>
       </div>
     </section>
-    <ClothesSlider title={"Similar Products"}/>
+    
+    <ClothesSlider title={"Similar Products"} similarProducts={similarWithFilter}/>
     </div>
   );
 }
