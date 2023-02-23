@@ -1,12 +1,9 @@
-import React from 'react'
-import ClothesSlider from '../../../features/Customer/ClothesSlider'
-import Layout from '../../../layout/Customer'
+import AboutPage from "../../../features/Customer/AboutPage"
+
 
 function About() {
   return (
-    <Layout>
-    
-    </Layout>
+    <AboutPage />
   )
 }
 export default About

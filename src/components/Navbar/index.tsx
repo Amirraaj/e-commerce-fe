@@ -18,31 +18,31 @@ interface IUser {
   createdAt: String;
   _id: String;
 }
-
-function Navbar() {
+type INav ={
+  setShowCart: () => void;
+}
+function Navbar({setShowCart, showCart}:any) {
   const [navToggler, setNavToggler] = useState(false);
   const [clientWindowHeight, setClientWindowHeight] = useState(0);
   const [boxShadow, setBoxShadow] = useState(0);
   const [item, setItem] = useState("");
-  // const [user, setUser] = useState<IUser[]>()
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState("");
 
   useEffect(() => {
-    const token = localStorage?.getItem('token')
+    const token = localStorage?.getItem("token");
     const data = async (token: string) => {
-      return await axios.get(URL + 'user/getUserByID', {
-        headers: {Authorization: `Bearer ${token}`}
-      })
+      return await axios.get(URL + "user/getUserByID", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    };
+    if (token) {
+      data(token)
+        .then((d) => {
+          setUser(d.data.data.userName);
+        })
+        .catch((e) => console.log(e));
     }
-    if(token) {
-      data(token).then(d => {
-        setUser(d.data.data.userName)
-      }).catch(e => console.log(e))
-    }
-  
-
-  }, [localStorage?.getItem('token'), user])
-  
+  }, [localStorage?.getItem("token"), user]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -66,10 +66,10 @@ function Navbar() {
       message.info("  This is Profile");
     }
     if (key === "2") {
-      localStorage.clear();
+      localStorage.removeItem("token");
       setItem("");
-      notification.success({message:"Log out Sucessfull"})
-      setUser('');
+      notification.success({ message: "Log out Sucessfull" });
+      setUser("");
     }
   };
 
@@ -130,7 +130,7 @@ function Navbar() {
                 <Link to="/" className="nav-link">
                   <li className="nav-item">Home</li>
                 </Link>
-                <Link to="/" className="nav-link">
+                <Link to="/about" className="nav-link">
                   <li className="nav-item">About Us</li>
                 </Link>
                 <Link to="/" className="nav-link">
@@ -141,7 +141,7 @@ function Navbar() {
                 </Link>
               </ul>
 
-              { !user ? (
+              {!user ? (
                 <div className="flex justify-center items-center gap-5">
                   <Link to="/login">
                     <Button size="large">Log In</Button>
@@ -153,24 +153,26 @@ function Navbar() {
                   </Link>
                 </div>
               ) : (
-                <Dropdown menu={{ items, onClick }}>
-                  <Space>
-                    <div className="flex justify-center items-center gap-7">
-                      <i className="fa-solid fa-cart-shopping text-[22px] text-primary hover:text-secondary cursor-pointer"></i>
-                      <div className="flex items-center gap-2 cursor-pointer">
-                        <img
-                          src={userImage}
-                          alt=""
-                          className="rounded-full w-[30px]"
-                        />
-                        <h1 className="text-xl text-primary font-medium ">
-                          {user}
-                        </h1>
-                        <i className="fa-solid fa-caret-down text-primary "></i>
+                <div className="flex justify-center items-center gap-5" >
+                  <i className="fa-solid fa-cart-shopping text-[22px] text-primary hover:text-secondary cursor-pointer" onClick={() => setShowCart(true)}></i>
+                  <Dropdown menu={{ items, onClick }}>
+                    <Space>
+                      <div className="flex justify-center items-center gap-7">
+                        <div className="flex items-center gap-2 cursor-pointer">
+                          <img
+                            src={userImage}
+                            alt=""
+                            className="rounded-full w-[30px]"
+                          />
+                          <h1 className="text-xl text-primary font-medium ">
+                            {user}
+                          </h1>
+                          <i className="fa-solid fa-caret-down text-primary "></i>
+                        </div>
                       </div>
-                    </div>
-                  </Space>
-                </Dropdown>
+                    </Space>
+                  </Dropdown>
+                </div>
               )}
             </div>
           </div>

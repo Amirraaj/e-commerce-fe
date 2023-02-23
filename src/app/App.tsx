@@ -30,6 +30,8 @@ function App() {
             <Route path="/login" element={<LogIn/>} />
             <Route path="/register" element={<Register/>} />
             <Route path="/allproducts" element={<AllProducts/>} />
+            <Route path="/about" element={<AllProducts/>} />
+
 
 
             {/* admin portal routes */}

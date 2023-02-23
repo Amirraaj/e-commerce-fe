@@ -88,12 +88,9 @@ a:hover{
     font-size: 18px !important;
 }
 
-
-
-.kj-header{
-    @apply text-2xl mx-1 font-medium 
+.anticon .anticon-search svg{
+    fill: #fff;
 }
-
 
 
 

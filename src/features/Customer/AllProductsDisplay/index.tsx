@@ -94,7 +94,7 @@ function AllProductsDisplay() {
             </div>
           </div>
         </div>
-        <div className=" p-14 flex gap-10 ml-[22rem]">
+        <div className=" p-14 flex gap-10 ml-[22rem] ">
           <Row gutter={[24, 50]}>
             {productArray?.map((item: IProduct, index: number) => {
               return (

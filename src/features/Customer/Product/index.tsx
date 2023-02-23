@@ -9,7 +9,7 @@ import {
 } from "../../../api/Customer/product";
 import { useEffect, useState } from "react";
 import { IProduct } from "../../../types";
-
+import { SliderLoading , ParagraphWithImageLoading } from "../../../constants/SkeletonLoader";
 function ProductPage() {
   const { id } = useParams();
   const [loader, setLoader] = useState<boolean>(true);
@@ -20,15 +20,14 @@ function ProductPage() {
     getProduct();
     setTimeout(() => {
       setLoader(false);
-    }, 1000);
+    }, 500);
+    window.scrollTo(0, 0);
   }, [id]);
 
   useEffect(() => {
     ProductWithCategory();
   }, [productDetails]);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
+  
 
   const getProduct = async () => {
     setLoader(true);
@@ -44,48 +43,11 @@ function ProductPage() {
     (product: IProduct) => product._id !== id
   );
 
-  const Loading = () => {
-    return (
-      <div className="flex justify-center items-center">
-        <Skeleton.Image style={{ width: "500px", height: "500px" }} />
-        <Skeleton
-          active
-          paragraph={{ rows: 15 }}
-          className="px-10 py-28 w-1/2"
-        />
-      </div>
-    );
-  };
-
-  const SliderLoading = () => {
-    return (
-      <div className="flex justify-center  items-center gap-10 mb-20 ">
-        {["1", "2", "3", "4"].map((item) => {
-          return (
-            <div
-              className="flex justify-center flex-col items-center mb-20 mx-5"
-              key={item}
-            >
-              <Skeleton.Image
-                active
-                style={{ width: "250px", height: "250px" }}
-              />
-              <Skeleton
-                active
-                paragraph={{ rows: 5 }}
-                style={{ width: "250px", height: "250px" }}
-              />
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
 
   return (
     <div>
       {loader ? (
-        <Loading />
+        <ParagraphWithImageLoading />
       ) : (
         <section className="Cover-section">
           <div className="White-wrapper"></div>
