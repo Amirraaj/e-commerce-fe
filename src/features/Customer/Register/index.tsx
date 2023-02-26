@@ -15,6 +15,7 @@ function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
+    control,
     reset,
     handleSubmit,
     formState: { errors },

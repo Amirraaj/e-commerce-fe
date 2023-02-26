@@ -16,6 +16,7 @@ import EditCategory from "../features/Admin/Category/editCategory";
 import EditProduct from "../features/Admin/Product/editProduct";
 import UserDatails from "../pages/Admin/UserDetails";
 import AllProducts from "../pages/Customer/AllProducts";
+import Payment from "../pages/Customer/Payment";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path="/register" element={<Register/>} />
             <Route path="/allproducts" element={<AllProducts/>} />
             <Route path="/about" element={<AllProducts/>} />
+            <Route path="/payment" element={<Payment />} />
 
 
 

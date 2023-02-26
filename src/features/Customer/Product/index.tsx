@@ -118,7 +118,7 @@ function ProductPage() {
       ) : (
         <ClothesSlider
           title={"Similar Products"}
-          similarProducts={similarWithFilter}
+          productArray={similarWithFilter}
         />
       )}
     </div>

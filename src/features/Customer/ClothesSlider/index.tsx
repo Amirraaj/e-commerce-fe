@@ -7,11 +7,10 @@ import { ICard, IProduct } from "../../../types";
 
 type ISlider = {
   title: string;
-  similarProducts?: IProduct[];
+  productArray?: IProduct[];
 };
 
-function ClothesSlider({ title, similarProducts }: ISlider) {
-  console.log(similarProducts,"ssshdkash akjbsjakjsd kkjsgas bj")
+function ClothesSlider({ title, productArray }: ISlider) {
   const sliderRef = useRef(null);
   const next = () => {
     // @ts-ignore
@@ -62,18 +61,18 @@ function ClothesSlider({ title, similarProducts }: ISlider) {
   return (
     <div className="px-24 my-10 relative">
       <i
-        className="fa-solid fa-circle-arrow-right absolute text-primary text-3xl top-[21rem] right-10 z-10 cursor-pointer hover:text-4xl"
+        className="fa-solid fa-circle-arrow-right absolute text-primary text-3xl top-[21rem] right-10  cursor-pointer hover:text-4xl"
         style={{ transition: "all 300ms" }}
         onClick={next}
       ></i>
       <i
-        className="fa-solid fa-circle-arrow-left absolute text-primary text-3xl top-[21rem] left-10 z-10 cursor-pointer hover:text-4xl"
+        className="fa-solid fa-circle-arrow-left absolute text-primary text-3xl top-[21rem] left-10  cursor-pointer hover:text-4xl"
         style={{ transition: "all 300ms" }}
         onClick={prev}
       ></i>
       <h1 className="Heading  text-2xl font-semibold text-primary ">{title}</h1>
       <Slider ref={sliderRef} {...sliderSettings}>
-        { similarProducts?.map((product: ICard) => {
+        { productArray?.map((product: ICard) => {
           return (
             <Card
               key={product._id}
