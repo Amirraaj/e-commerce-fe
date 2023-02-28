@@ -3,29 +3,27 @@ import React, { useEffect, useState } from "react";
 import Hoodie from "../../assets/Clothes/kindpng_623334.png";
 import "./style.css";
 import { Link } from "react-router-dom";
-import { ICard } from "../../types";
-import { json } from "stream/consumers";
-import { type } from "os";
-
+import { ICard , ICart } from "../../types";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../Redux/cartSlice";
 function Card({ _id, name, intro, photo, price, discount }: ICard) {
-  const [myData, setMyData] = useState<string []>([]);
-  const [id , setId] = useState<string>("")
 
-  useEffect(() =>{
-    const storedData = localStorage.getItem('cart');
+  
+  const dispatch = useDispatch();
+  const addCart = () =>{
+    const cartDetails: ICart = {
+      id: _id,
+      name: name,
+      price: price,
+      photo: photo,
+      discount: discount || null,
+      quantity: 1,
+      size:"xl"
+    };
+    
+    dispatch(addToCart(cartDetails))
+  }
 
-    if(storedData){
-      const parsedData = JSON.parse(storedData) as string[];
-      setMyData(parsedData)
-    }
-  },[])
-
-  const addCart = (id: string) => {
-      const newArray = [...myData , id];
-      localStorage.setItem('cart', JSON.stringify(newArray));
-      setMyData(newArray)
-      setId(id)
-  };
   return (
     <div
       className="card cursor-pointer"
@@ -75,7 +73,7 @@ function Card({ _id, name, intro, photo, price, discount }: ICard) {
           </div>
           <i
             className="fa-solid fa-cart-shopping text-[40px] hover:text-primary hover:opacity-70"
-            onClick={() => addCart(_id)}
+            onClick={() => addCart()}
           ></i>
         </div>
       </div>

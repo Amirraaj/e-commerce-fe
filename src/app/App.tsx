@@ -17,7 +17,7 @@ import EditProduct from "../features/Admin/Product/editProduct";
 import UserDatails from "../pages/Admin/UserDetails";
 import AllProducts from "../pages/Customer/AllProducts";
 import Payment from "../pages/Customer/Payment";
-
+import Profile from "../pages/Customer/Profile";
 
 function App() {
   return (
@@ -33,9 +33,8 @@ function App() {
             <Route path="/allproducts" element={<AllProducts/>} />
             <Route path="/about" element={<AllProducts/>} />
             <Route path="/payment" element={<Payment />} />
-
-
-
+            <Route path="/profile" element={<Profile />} />
+            
             {/* admin portal routes */}
             <Route path="/admin" element ={<AdminHome/>} />
             <Route path="/adminproduct" element ={<ProductList/>} />

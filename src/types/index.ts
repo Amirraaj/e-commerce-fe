@@ -21,3 +21,13 @@ export type ICard = {
   price: number;
   discount: string;
 };
+
+export type ICart = {
+  id: string;
+  name: string;
+  price: number;
+  photo: string;
+  discount: string | null;
+  quantity: number;
+  size: string;
+};

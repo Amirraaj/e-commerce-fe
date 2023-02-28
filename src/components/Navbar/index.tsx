@@ -7,6 +7,8 @@ import { Dropdown, Space } from "antd";
 import { getUserProfile } from "../../api/Customer/index";
 import "./style.css";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { CartState } from "../../Redux/cartSlice";
 const URL = process.env.REACT_APP_API_URL || "http://localhost:5000/";
 interface IUser {
   eamil: String;
@@ -27,6 +29,7 @@ function Navbar({setShowCart, showCart}:any) {
   const [boxShadow, setBoxShadow] = useState(0);
   const [item, setItem] = useState("");
   const [user, setUser] = useState("");
+  const cart = useSelector((state: CartState) => state.items);
 
   useEffect(() => {
     const token = localStorage?.getItem("token");
@@ -154,7 +157,7 @@ function Navbar({setShowCart, showCart}:any) {
                 </div>
               ) : (
                 <div className="flex justify-center items-center gap-5" >
-                  <i className="fa-solid fa-cart-shopping text-[22px] text-primary hover:text-secondary cursor-pointer" onClick={() => setShowCart(true)}></i>
+                  <i className="fa-solid fa-cart-shopping text-[22px] text-primary hover:text-secondary cursor-pointer relative" onClick={() => setShowCart(true)}><div className="absolute w-[20px] h-[20px] bg-[red] rounded-full top-[-13px] right-[-13px] text-light text-[10px] flex justify-center items-center">{cart?.length}</div></i>
                   <Dropdown menu={{ items, onClick }}>
                     <Space>
                       <div className="flex justify-center items-center gap-7">
