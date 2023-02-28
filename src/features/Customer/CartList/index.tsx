@@ -2,12 +2,20 @@ import { Button } from "antd";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { CartItem } from "./cartItem";
-import { ICart } from "../../../types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CartState } from "../../../Redux/cartSlice";
+import { Link, useNavigate } from "react-router-dom";
 
 function CardList({ setShowCart, showCart }: any) {
   const cart = useSelector((state: CartState) => state.items);
+  const dispatch = useDispatch
+  const navigate = useNavigate()
+  const handelCheckout =() => {
+    navigate('/payment');
+  }
+  const handelClear = () =>{
+   
+  }
   return (
     <section
       className={clsx(
@@ -25,15 +33,22 @@ function CardList({ setShowCart, showCart }: any) {
       </div>
       <div className="flex flex-col px-10 gap-10">{
         cart.map((item) =>{
-        return(<><CartItem {...item} key={item.id} /></>)
-        })
+        return<CartItem {...item} key={item.id} />
+       })
       }</div>
 
-      <div className="flex items-center justify-center">
-        <Button type="primary" className="mx-10 my-20 px-10" size="large">
+      <div className="flex items-center justify-center mt-10 gap-5">
+
+        <Button type="primary" className="" size="large" onClick={handelCheckout}>
           {" "}
           Checkout{" "}
         </Button>
+        <Button  className="" size="large" onClick={handelClear}>
+          {" "}
+          Clear Cart{" "}
+        </Button>
+      
+
       </div>
     </section>
   );

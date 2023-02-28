@@ -20,10 +20,10 @@ interface IUser {
   createdAt: String;
   _id: String;
 }
-type INav ={
+type INav = {
   setShowCart: () => void;
-}
-function Navbar({setShowCart, showCart}:any) {
+};
+function Navbar({ setShowCart, showCart }: any) {
   const [navToggler, setNavToggler] = useState(false);
   const [clientWindowHeight, setClientWindowHeight] = useState(0);
   const [boxShadow, setBoxShadow] = useState(0);
@@ -156,8 +156,17 @@ function Navbar({setShowCart, showCart}:any) {
                   </Link>
                 </div>
               ) : (
-                <div className="flex justify-center items-center gap-5" >
-                  <i className="fa-solid fa-cart-shopping text-[22px] text-primary hover:text-secondary cursor-pointer relative" onClick={() => setShowCart(true)}><div className="absolute w-[20px] h-[20px] bg-[red] rounded-full top-[-13px] right-[-13px] text-light text-[10px] flex justify-center items-center">{cart?.length}</div></i>
+                <div className="flex justify-center items-center gap-5">
+                  <i
+                    className="fa-solid fa-cart-shopping text-[22px] text-primary hover:text-secondary cursor-pointer relative"
+                    onClick={() => setShowCart(true)}
+                  >
+                    {cart.length > 0 && (
+                      <div className="absolute w-[15px] h-[15px] bg-[red] rounded-full top-[-10px] right-[-10px] text-light text-[10px] flex justify-center items-center">
+                        {cart?.length}
+                      </div>
+                    )}
+                  </i>
                   <Dropdown menu={{ items, onClick }}>
                     <Space>
                       <div className="flex justify-center items-center gap-7">

@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react";
 import Hoodie from "../../assets/Clothes/kindpng_623334.png";
 import "./style.css";
 import { Link } from "react-router-dom";
-import { ICard , ICart } from "../../types";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../Redux/cartSlice";
+import { ICard, ICart } from "../../types";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, CartState, removeFromCart } from "../../Redux/cartSlice";
 function Card({ _id, name, intro, photo, price, discount }: ICard) {
+  const cart = useSelector((state: CartState) => state.items);
 
-  
+  const isAddedToCart = cart.some((el) => el.id === _id);
+
   const dispatch = useDispatch();
-  const addCart = () =>{
+  const addCart = () => {
     const cartDetails: ICart = {
       id: _id,
       name: name,
@@ -18,12 +20,15 @@ function Card({ _id, name, intro, photo, price, discount }: ICard) {
       photo: photo,
       discount: discount || null,
       quantity: 1,
-      size:"xl"
+      size: "xl",
     };
-    
-    dispatch(addToCart(cartDetails))
-  }
 
+    dispatch(addToCart(cartDetails));
+  };
+
+  const removeCart = () =>{
+    dispatch(removeFromCart(_id))
+  }
   return (
     <div
       className="card cursor-pointer"
@@ -71,10 +76,16 @@ function Card({ _id, name, intro, photo, price, discount }: ICard) {
             </div>
             <span className="font-medium">Rs {price}</span>
           </div>
-          <i
-            className="fa-solid fa-cart-shopping text-[40px] hover:text-primary hover:opacity-70"
-            onClick={() => addCart()}
-          ></i>
+          {isAddedToCart ? (
+            <i className="fa-solid fa-circle-check text-[40px] text-secondary hover:text-primary hover:opacity-70" 
+            onClick={() => removeCart()}
+            ></i>
+          ) : (
+            <i
+              className="fa-solid fa-cart-shopping text-[40px] hover:text-primary hover:opacity-70"
+              onClick={() => addCart()}
+            ></i>
+          )}
         </div>
       </div>
     </div>

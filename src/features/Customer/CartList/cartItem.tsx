@@ -58,14 +58,14 @@ export const CartItem = ({id, name, photo, price , quantity, discount, size}:ICa
                 disabled={quantity === 0 ? true :false}
                 className={`${quantity === 0 ? "bg-secondary cursor-not-allowed" : "bg-primary"} !w-[20px]  p-[5px] !h-[20px] rounded-full flex items-center justify-center text-light font-medium`}
               >
-                -
+                <i className="fa-solid fa-minus text-[13px]"></i>
               </button>
               <span>{quantity}</span>
               <button
                 onClick={() => onQuantatyChange("add")}
                 className="bg-primary !w-[20px]  p-[5px] !h-[20px] rounded-full flex items-center justify-center text-light font-medium"
               >
-                +
+                <i className="fa-solid fa-plus text-[13px]"></i>
               </button>
             </div>
           </div>
