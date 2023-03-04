@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Empty } from "antd";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { CartItem } from "./cartItem";
@@ -8,14 +8,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 function CardList({ setShowCart, showCart }: any) {
   const cart = useSelector((state: CartState) => state.items);
-  const dispatch = useDispatch
-  const navigate = useNavigate()
-  const handelCheckout =() => {
-    navigate('/payment');
-  }
-  const handelClear = () =>{
-   
-  }
+  const dispatch = useDispatch;
+  const navigate = useNavigate();
+  const handelCheckout = () => {
+    navigate("/payment");
+  };
+  const handelClear = () => {};
   return (
     <section
       className={clsx(
@@ -31,25 +29,34 @@ function CardList({ setShowCart, showCart }: any) {
           onClick={() => setShowCart(false)}
         ></i>
       </div>
-      <div className="flex flex-col px-10 gap-10">{
-        cart.map((item) =>{
-        return<CartItem {...item} key={item.id} />
-       })
-      }</div>
-
-      <div className="flex items-center justify-center mt-10 gap-5">
-
-        <Button type="primary" className="" size="large" onClick={handelCheckout}>
-          {" "}
-          Checkout{" "}
-        </Button>
-        <Button  className="" size="large" onClick={handelClear}>
-          {" "}
-          Clear Cart{" "}
-        </Button>
-      
-
+      <div className="flex flex-col px-10 gap-10">
+        {cart.map((item) => {
+          return <CartItem {...item} key={item.id} />;
+        })}
       </div>
+
+      {cart.length > 0 ? (
+        <div className="flex items-center justify-center mt-10 gap-5">
+          <Button
+            type="primary"
+            className=""
+            size="large"
+            onClick={handelCheckout}
+          >
+            {" "}
+            Checkout{" "}
+          </Button>
+          <Button className="" size="large" onClick={handelClear}>
+            {" "}
+            Clear Cart{" "}
+          </Button>
+        </div>
+      ) : (
+        <div className="flex items-center justify-center mt-10 gap-5"><Empty /></div>
+      )}
+      <Link to={"/allproducts"} className="mb-10 mt-5 flex justify-center">
+        <span className=" opacity-70 underline cursor-pointer text-primary hover:text-secondary">Continue shopping</span>
+      </Link>
     </section>
   );
 }

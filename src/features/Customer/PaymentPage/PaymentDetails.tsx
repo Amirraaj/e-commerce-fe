@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { registerSchema } from "../../../validation/Customer";
+import { paymentSchema } from "../../../validation/Customer";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
@@ -7,16 +7,18 @@ import { ErrorMessage } from "@hookform/error-message";
 import { signUp } from "../../../api/Customer/index";
 import KJInput from "../../../constants/KJInput";
 import KJTextarea from "../../../constants/KJTextArea";
-import { Col, Row, Radio, Button } from "antd";
+import { Col, Row, Radio, Button, Alert, notification } from "antd";
 import clsx from "clsx";
-import type { RadioChangeEvent } from 'antd';
-type ContactUsFormData = z.infer<typeof registerSchema>;
+import type { RadioChangeEvent } from "antd";
+import { useNavigate } from "react-router-dom";
+type ContactUsFormData = z.infer<typeof paymentSchema>;
 
 function PaymentDetails() {
-    const [isSelected , setIsSelected] = useState(false)
-    const [value, setValue] = useState(0);
-   
-    
+  const [isSelected, setIsSelected] = useState(false);
+  const [value, setValue] = useState(0);
+  const navigate = useNavigate();
+  
+
   const {
     register,
     reset,
@@ -24,18 +26,24 @@ function PaymentDetails() {
     handleSubmit,
     formState: { errors },
   } = useForm<ContactUsFormData>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(paymentSchema),
     mode: "onBlur", // "onChange"
   });
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
-    setIsSelected(true)
-
+    setIsSelected(true);
   };
+  const onSubmit = (data: ContactUsFormData) => {
+    console.log(data,"data from sss")
+  };
+  const handelCancle = () =>{
+      notification.warning({message:"Order was canceled."});
+      navigate('/')
+  }
   return (
     <div className="w-1/2 pr-14">
       <h1 className="my-2 text-xl font-medium">Your Order</h1>
-      <form className="mt-4">
+      <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
         <Row gutter={12}>
           <Col span={12}>
             <KJInput
@@ -52,14 +60,30 @@ function PaymentDetails() {
           </Col>
           <Col span={12}>
             <KJInput
-              name="name"
+              name="phone"
               control={control}
               label="Reciver Number"
               parentClass=""
               register={register}
               labelClass="block text-gray-700 text-sm font-medium mb-2"
               error={errors}
-              placeholder="Product Name"
+              placeholder="Reciver Number"
+              required
+              inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </Col>
+        </Row>
+        <Row gutter={12}>
+          <Col span={24}>
+            <KJInput
+              name="location"
+              control={control}
+              label="Location"
+              parentClass=""
+              register={register}
+              labelClass="block text-gray-700 text-sm font-medium mb-2"
+              error={errors}
+              placeholder="Location"
               required
               inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
@@ -68,34 +92,64 @@ function PaymentDetails() {
         <Row>
           <Col span={24}>
             <KJTextarea
-              name="description"
+              name="monument"
               control={control}
               register={register}
-              label="Location Description"
+              label="Monument Near You"
               parentClass=""
               labelClass="block text-gray-700 text-sm font-medium mb-2"
               error={errors}
-              placeholder="Description"
+              required
+              placeholder="Monument Near You"
               inputClass="shadow appearance-none border rounded border-[#bababa] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </Col>
         </Row>
         <Row gutter={12}>
           <Col span={24}>
-            <Radio.Group className="flex flex-col gap-5" onChange={onChange} value={value}>
-              <Radio value={1} className={clsx(`py-3 px-5 ${isSelected ? "bg-[#ebe9f0] " : "bg-[#f8f7fa] "}   w-full rounded`)}>
+            <Radio.Group
+              className="flex flex-col gap-5"
+              value={value}
+              {...register("paymentMethod")}
+              onChange={(e) => onChange(e)}
+            >
+              <Radio
+                value={1}
+                className={clsx(
+                  `py-3 px-5 ${
+                    isSelected ? "bg-[#ebe9f0] " : "bg-[#f8f7fa] "
+                  }   w-full rounded`
+                )}
+              >
                 Cash on Delivery
               </Radio>
-              <Radio value={2} disabled={true} className="py-3 px-5 bg-[#f8f7fa] w-full rounded">
-                <div>Pay via Digital Wallet  (comming soon...)</div>
+              <Radio
+                value={2}
+                disabled={true}
+                className="py-3 px-5 bg-[#f8f7fa] w-full rounded"
+              >
+                <div>Pay via Digital Wallet (coming soon...)</div>
               </Radio>
             </Radio.Group>
+            <ErrorMessage
+              errors={errors}
+              name={"paymentMethod"}
+              render={({ message }) => (
+                <Alert
+                  message={message}
+                  type="error"
+                  className="mt-2 text-center"
+                />
+              )}
+            />
           </Col>
         </Row>
 
-        <div className="flex mt-10 gap-10 items-center justify-center" >
-            <Button type="primary" size="large">Order Now</Button>
-            <Button size="large">Cancle</Button>
+        <div className="flex mt-10 gap-10 items-center justify-center">
+          <Button type="primary" htmlType="submit" size="large">
+            Order Now
+          </Button>
+          <Button size="large" onClick={handelCancle}>Cancle</Button>
         </div>
       </form>
     </div>

@@ -72,3 +72,38 @@ export const registerSchema = z.object({
     .email(),
   nickName: z.string().trim().optional(),
 });
+
+
+export const paymentSchema = z.object({
+  name: z
+    .string({ required_error: "First Name is required" })
+    .regex(/^[a-zA-Z ]*$/, "First Name only accepts alphabets")
+    .nonempty({ message: "First Name is required" })
+    .trim()
+    .min(2, { message: "First Name should be atleast 2 characters" }),
+
+    phone: z
+    .string({ required_error: "Phone Number is required" })
+    .nonempty({ message: "Phone Number is required" })
+    .trim()
+    .regex(/^(\+?\d{1,3})?[\s.-]?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, {
+      message: "Phone number is not valid",
+    }),
+
+    location: z
+    .string({ required_error: "Location is required" })
+    .nonempty({ message: "Location is required" })
+    .trim()
+    .min(2, { message: "Location should be atleast 2 characters" }),
+
+    monument: z
+    .string({ required_error: "Monument is required" })
+    .nonempty({ message: "Monument is required" })
+    .trim()
+    .min(2, { message: "Monument should be atleast 2 characters" }),
+
+    paymentMethod: z.string({invalid_type_error:"Payment Method is required"}).nonempty({message:"Payment Method is required"})
+})
+
+
+

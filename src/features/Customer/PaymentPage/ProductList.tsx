@@ -1,6 +1,6 @@
+import { Empty } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
-import { object } from "zod";
 import { CartState } from "../../../Redux/cartSlice";
 import { ICart } from "../../../types";
 const Product = ({id, name, price, quantity, size ,photo}:ICart) => {
@@ -38,12 +38,14 @@ function ProductList() {
     <section className="flex flex-col w-1/2 pl-20 ">
         <div className="w-[90%]">
     <h1 className="my-2 text-xl font-medium">Your Order</h1>
-      {
+      { cart.length > 0 ?
         cart.map((item) =>{
           return(
             <Product {...item}  key={item.id}/>
           )
         })
+
+        : <div><Empty/></div>
       }
     
      <div className="total-amount flex justify-between items-center mt-10">

@@ -8,13 +8,22 @@ import {
   getProductByCategory,
 } from "../../../api/Customer/product";
 import { useEffect, useState } from "react";
-import { IProduct } from "../../../types";
-import { SliderLoading , ParagraphWithImageLoading } from "../../../constants/SkeletonLoader";
+import { ICart, IProduct } from "../../../types";
+import {
+  SliderLoading,
+  ParagraphWithImageLoading,
+} from "../../../constants/SkeletonLoader";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, CartState, removeFromCart } from "../../../Redux/cartSlice";
+
 function ProductPage() {
   const { id } = useParams();
   const [loader, setLoader] = useState<boolean>(true);
   const [productDetails, setProductDetails] = useState<IProduct>();
   const [simailarProducts, setSimilarProducts] = useState<IProduct[]>();
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state: CartState) => state.items);
 
   useEffect(() => {
     getProduct();
@@ -27,13 +36,13 @@ function ProductPage() {
   useEffect(() => {
     ProductWithCategory();
   }, [productDetails]);
-  
 
   const getProduct = async () => {
     setLoader(true);
     const res = await getProductById(id);
     setProductDetails(res?.data?.data);
   };
+  const isAddedToCart = cart.some((el) => el.id === productDetails?._id);
 
   const ProductWithCategory = async () => {
     const res = await getProductByCategory(productDetails?.category_id?._id);
@@ -43,6 +52,23 @@ function ProductPage() {
     (product: IProduct) => product._id !== id
   );
 
+  const handelAdd = () => {
+    const cartDetails = {
+      id: productDetails?._id,
+      name: productDetails?.name,
+      price: productDetails?.price,
+      photo: productDetails?.photo,
+      discount: productDetails?.discount || null,
+      quantity: 1,
+      size: "xl",
+    };
+
+    dispatch(addToCart(cartDetails));
+  };
+   
+  const handelRemove = () =>{
+    dispatch(removeFromCart(productDetails?._id))
+  }
 
   return (
     <div>
@@ -101,9 +127,20 @@ function ProductPage() {
                 <h1 className="text-2xl  mt-5 mb-3">Description </h1>
                 <p className="">{productDetails?.description}</p>
                 <div className="flex items-center gap-5">
-                  <Button type="primary" size="large" className="mt-12">
-                    + Add to Cart
-                  </Button>
+                  {!isAddedToCart ? (
+                    <Button
+                      type="primary"
+                      size="large"
+                      className="mt-12"
+                      onClick={handelAdd}
+                    >
+                      + Add to Cart
+                    </Button>
+                  ) : (
+                    <Button size="large" type="primary" className="mt-12" onClick={handelRemove}>
+                      Remove from Cart
+                    </Button>
+                  )}
                   <Button size="large" className="mt-12">
                     Buy Now
                   </Button>

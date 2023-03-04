@@ -1,6 +1,6 @@
 import { Button, message, notification } from "antd";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import userImage from "../../assets/General/userIcon.png";
 import type { MenuProps } from "antd";
 import { Dropdown, Space } from "antd";
@@ -30,7 +30,7 @@ function Navbar({ setShowCart, showCart }: any) {
   const [item, setItem] = useState("");
   const [user, setUser] = useState("");
   const cart = useSelector((state: CartState) => state.items);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage?.getItem("token");
     const data = async (token: string) => {
@@ -73,6 +73,7 @@ function Navbar({ setShowCart, showCart }: any) {
       setItem("");
       notification.success({ message: "Log out Sucessfull" });
       setUser("");
+      navigate("/")     
     }
   };
 
