@@ -31,3 +31,12 @@ export type ICart = {
   quantity: number;
   size: string;
 };
+
+export type IUser ={
+  firstName: String;
+  lastName: String;
+  userName: String;
+  phone: String;
+  email: String;
+}
+

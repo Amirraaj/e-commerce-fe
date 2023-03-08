@@ -7,6 +7,9 @@ import { ICard, ICart } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, CartState, removeFromCart } from "../../Redux/cartSlice";
 function Card({ _id, name, intro, photo, price, discount }: ICard) {
+
+
+  
   const cart = useSelector((state: CartState) => state.items);
 
   const isAddedToCart = cart.some((el) => el.id === _id);
@@ -22,7 +25,6 @@ function Card({ _id, name, intro, photo, price, discount }: ICard) {
       quantity: 1,
       size: "xl",
     };
-
     dispatch(addToCart(cartDetails));
   };
 

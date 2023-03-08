@@ -7,8 +7,12 @@ import { Dropdown, Space } from "antd";
 import { getUserProfile } from "../../api/Customer/index";
 import "./style.css";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { CartState } from "../../Redux/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { UInterface } from "../../Redux/userSlice";
+import { addUser } from "../../Redux/userSlice";
+
+
 const URL = process.env.REACT_APP_API_URL || "http://localhost:5000/";
 interface IUser {
   eamil: String;
@@ -31,6 +35,8 @@ function Navbar({ setShowCart, showCart }: any) {
   const [user, setUser] = useState("");
   const cart = useSelector((state: CartState) => state.items);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const token = localStorage?.getItem("token");
     const data = async (token: string) => {
@@ -41,6 +47,15 @@ function Navbar({ setShowCart, showCart }: any) {
     if (token) {
       data(token)
         .then((d) => {
+          const userDetails = {
+            firstName: d.data.data.firstName,
+            lastName: d.data.data.lastName,
+            userName: d.data.data.userName,
+            phone: d.data.data.phone,
+            email: d.data.data.email,
+          };
+          dispatch(addUser(userDetails))
+          console.log(userDetails, "this is data");
           setUser(d.data.data.userName);
         })
         .catch((e) => console.log(e));
@@ -73,7 +88,7 @@ function Navbar({ setShowCart, showCart }: any) {
       setItem("");
       notification.success({ message: "Log out Sucessfull" });
       setUser("");
-      navigate("/")     
+      navigate("/");
     }
   };
 
@@ -91,6 +106,8 @@ function Navbar({ setShowCart, showCart }: any) {
       ),
     },
   ];
+  const newUser = useSelector((state: UInterface) => state.user);
+  console.log(newUser,"this is user")
 
   return (
     <nav

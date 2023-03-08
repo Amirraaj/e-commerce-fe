@@ -1,6 +1,7 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import Item from "antd/es/list/Item";
 import { ICart } from "../types";
+import { userSlice } from "./userSlice";
 
 export interface CartState {
   items: ICart[];
@@ -67,6 +68,14 @@ export const cartSlice = createSlice({
 
 export const { addToCart, changeQuantityItem, changeSizeItem, removeFromCart } =
   cartSlice.actions;
+
+  // const store = configureStore({
+  //   reducer: {
+  //     cart:cartSlice.reducer,
+  //     user: userSlice.reducer,
+  //   }
+  // });
+
 
 const store = configureStore({
   reducer: cartSlice.reducer,
