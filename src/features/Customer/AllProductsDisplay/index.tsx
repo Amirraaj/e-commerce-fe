@@ -48,8 +48,8 @@ function AllProductsDisplay() {
   const onSearch = (value: string) => console.log(value);
 
   return (
-    <Layout>
-      <section className="flex relative">
+    <Layout hideFooter>
+      <section className="flex relative ">
         <div className=" py-14 pl-5 min-w-[22rem] max-w-[22rem] ">
           <div className="p-2 bg-[#e4eaf5] pb-10 rounded-3xl px-7">
             <span className="text-3xl font-medium flex justify-center items-center mt-5">
@@ -94,7 +94,7 @@ function AllProductsDisplay() {
             </div>
           </div>
         </div>
-        <div className=" p-14 flex gap-10 h-screen overflow-auto ">
+        <div className=" p-14 flex gap-10 overflow-auto " style={{height:"85vh"}}>
           <Row gutter={[24, 50]}>
             {productArray?.map((item: IProduct, index: number) => {
               return (

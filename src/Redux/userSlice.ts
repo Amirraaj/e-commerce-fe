@@ -1,5 +1,6 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../types";
+import { RootState } from "./store";
 
 export interface UInterface {
   user: IUser;
@@ -7,6 +8,7 @@ export interface UInterface {
 
 const initialState: UInterface = {
   user: {
+    id:"",
     firstName: "",
     lastName: "",
     userName: "",
@@ -27,6 +29,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const getUser = (state: any) => ({...state.userReducer.user,  isAuthenticated: !!state.userReducer.user.email}); 
+export const getUser = (state: RootState) => ({...state.userReducer.user,  isAuthenticated: !!state.userReducer.user.email}); 
 
 export const { addUser } = userSlice.actions;

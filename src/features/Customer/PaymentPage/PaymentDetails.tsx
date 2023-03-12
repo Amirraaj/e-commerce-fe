@@ -11,14 +11,19 @@ import { Col, Row, Radio, Button, Alert, notification } from "antd";
 import clsx from "clsx";
 import type { RadioChangeEvent } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../Redux/store";
+import { getUser } from "../../../Redux/userSlice";
+import { sendOrder } from "../../../api/Customer/order";
 type ContactUsFormData = z.infer<typeof paymentSchema>;
 
 function PaymentDetails() {
   const [isSelected, setIsSelected] = useState(false);
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
-  
-
+  const cart = useSelector((state: RootState) => state.cartReducer.items);
+  const user = useSelector(getUser);
+  const { id } = user;
   const {
     register,
     reset,
@@ -33,13 +38,32 @@ function PaymentDetails() {
     setValue(e.target.value);
     setIsSelected(true);
   };
-  const onSubmit = (data: ContactUsFormData) => {
-    console.log(data,"data from sss")
+
+  const onSubmit = async (data: ContactUsFormData) => {
+    const orderData = {
+      user_id: id,
+      receiver: {
+        receiver_name: data.name,
+        receiver_contact: data.phone,
+        location: data.location,
+        monument: data.monument,
+      },
+      products: cart,
+      status:"pending",
+      paymentMethod: data.paymentMethod == "1" ? "cash on delivery" :"degital wallet"
+    };
+      const res = await sendOrder(orderData);
+      if(res.status == 200){
+          
+      }else{
+        notification.error({message:"Something went wrong. Try again"})
+      }
+
   };
-  const handelCancle = () =>{
-      notification.warning({message:"Order was canceled."});
-      navigate('/')
-  }
+  const handelCancle = () => {
+    notification.warning({ message: "Order was canceled." });
+    navigate("/");
+  };
   return (
     <div className="w-1/2 pr-14">
       <h1 className="my-2 text-xl font-medium">Your Order</h1>
@@ -149,7 +173,9 @@ function PaymentDetails() {
           <Button type="primary" htmlType="submit" size="large">
             Order Now
           </Button>
-          <Button size="large" onClick={handelCancle}>Cancle</Button>
+          <Button size="large" onClick={handelCancle}>
+            Cancle
+          </Button>
         </div>
       </form>
     </div>

@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserApi } from "../../api/Customer/user";
 import userImage from "../../assets/General/userIcon.png";
-import { CartState } from "../../Redux/cartSlice";
 import { RootState } from "../../Redux/store";
+
 import { addUser, getUser } from "../../Redux/userSlice";
 import "./style.css";
 
@@ -39,6 +39,7 @@ function Navbar({ setShowCart, showCart }: any) {
       getUserApi(token as string)
         .then((d) => {
           const userDetails = {
+            id:d.data.data._id,
             firstName: d.data.data.firstName,
             lastName: d.data.data.lastName,
             userName: d.data.data.userName,

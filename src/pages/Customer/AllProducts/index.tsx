@@ -3,7 +3,7 @@ import AllProductsDisplay from '../../../features/Customer/AllProductsDisplay'
 
 function AllProducts() {
   return (
-    <AllProductsDisplay />
+    <AllProductsDisplay  />
   )
 }
 

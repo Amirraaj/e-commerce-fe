@@ -33,6 +33,7 @@ export type ICart = {
 };
 
 export type IUser ={
+  id:string;
   firstName: String;
   lastName: String;
   userName: String;
