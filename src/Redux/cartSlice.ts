@@ -68,17 +68,3 @@ export const cartSlice = createSlice({
 
 export const { addToCart, changeQuantityItem, changeSizeItem, removeFromCart } =
   cartSlice.actions;
-
-  // const store = configureStore({
-  //   reducer: {
-  //     cart:cartSlice.reducer,
-  //     user: userSlice.reducer,
-  //   }
-  // });
-
-
-const store = configureStore({
-  reducer: cartSlice.reducer,
-});
-
-export default store;

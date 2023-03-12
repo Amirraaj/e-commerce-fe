@@ -1,19 +1,15 @@
-import { Button, message, notification } from "antd";
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import userImage from "../../assets/General/userIcon.png";
 import type { MenuProps } from "antd";
-import { Dropdown, Space } from "antd";
-import { getUserProfile } from "../../api/Customer/index";
-import "./style.css";
-import axios from "axios";
-import { CartState } from "../../Redux/cartSlice";
+import { Button, Dropdown, message, notification, Space } from "antd";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { UInterface } from "../../Redux/userSlice";
-import { addUser } from "../../Redux/userSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { getUserApi } from "../../api/Customer/user";
+import userImage from "../../assets/General/userIcon.png";
+import { CartState } from "../../Redux/cartSlice";
+import { RootState } from "../../Redux/store";
+import { addUser, getUser } from "../../Redux/userSlice";
+import "./style.css";
 
-
-const URL = process.env.REACT_APP_API_URL || "http://localhost:5000/";
 interface IUser {
   eamil: String;
   firstName: String;
@@ -32,20 +28,15 @@ function Navbar({ setShowCart, showCart }: any) {
   const [clientWindowHeight, setClientWindowHeight] = useState(0);
   const [boxShadow, setBoxShadow] = useState(0);
   const [item, setItem] = useState("");
-  const [user, setUser] = useState("");
-  const cart = useSelector((state: CartState) => state.items);
+  const cart = useSelector((state: RootState) => state.cartReducer.items);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector(getUser);
+
 
   useEffect(() => {
     const token = localStorage?.getItem("token");
-    const data = async (token: string) => {
-      return await axios.get(URL + "user/getUserByID", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-    };
-    if (token) {
-      data(token)
+      getUserApi(token as string)
         .then((d) => {
           const userDetails = {
             firstName: d.data.data.firstName,
@@ -54,13 +45,11 @@ function Navbar({ setShowCart, showCart }: any) {
             phone: d.data.data.phone,
             email: d.data.data.email,
           };
+
           dispatch(addUser(userDetails))
-          console.log(userDetails, "this is data");
-          setUser(d.data.data.userName);
         })
         .catch((e) => console.log(e));
-    }
-  }, [localStorage?.getItem("token"), user]);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -87,7 +76,6 @@ function Navbar({ setShowCart, showCart }: any) {
       localStorage.removeItem("token");
       setItem("");
       notification.success({ message: "Log out Sucessfull" });
-      setUser("");
       navigate("/");
     }
   };
@@ -106,8 +94,6 @@ function Navbar({ setShowCart, showCart }: any) {
       ),
     },
   ];
-  const newUser = useSelector((state: UInterface) => state.user);
-  console.log(newUser,"this is user")
 
   return (
     <nav
@@ -162,7 +148,7 @@ function Navbar({ setShowCart, showCart }: any) {
                 </Link>
               </ul>
 
-              {!user ? (
+              {!user.isAuthenticated ? (
                 <div className="flex justify-center items-center gap-5">
                   <Link to="/login">
                     <Button size="large">Log In</Button>
@@ -179,7 +165,7 @@ function Navbar({ setShowCart, showCart }: any) {
                     className="fa-solid fa-cart-shopping text-[22px] text-primary hover:text-secondary cursor-pointer relative"
                     onClick={() => setShowCart(true)}
                   >
-                    {cart.length > 0 && (
+                    { cart.length > 0 && (
                       <div className="absolute w-[15px] h-[15px] bg-[red] rounded-full top-[-10px] right-[-10px] text-light text-[10px] flex justify-center items-center">
                         {cart?.length}
                       </div>
@@ -195,7 +181,7 @@ function Navbar({ setShowCart, showCart }: any) {
                             className="rounded-full w-[30px]"
                           />
                           <h1 className="text-xl text-primary font-medium ">
-                            {user}
+                            {user.userName}
                           </h1>
                           <i className="fa-solid fa-caret-down text-primary "></i>
                         </div>

@@ -20,10 +20,13 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     addUser: (state, action) => {
+      console.log(action)
       const newUser = action.payload;
       state.user = newUser;
     },
   },
 });
+
+export const getUser = (state: any) => ({...state.userReducer.user,  isAuthenticated: !!state.userReducer.user.email}); 
 
 export const { addUser } = userSlice.actions;
