@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import Hoodie from "../../assets/Clothes/kindpng_623334.png";
 import "./style.css";
 import { Link } from "react-router-dom";
-import { ICard, ICart } from "../../types";
+import { ICard, ICart} from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, CartState, removeFromCart } from "../../Redux/cartSlice";
+import { RootState } from "../../Redux/store";
 function Card({ _id, name, intro, photo, price, discount }: ICard) {
-  const cart = useSelector((state: CartState) => state.items);
+  const cart = useSelector((state: RootState) => state.cartReducer.items);
 
   const isAddedToCart = cart.some((el) => el.id === _id);
 
@@ -22,7 +23,6 @@ function Card({ _id, name, intro, photo, price, discount }: ICard) {
       quantity: 1,
       size: "xl",
     };
-
     dispatch(addToCart(cartDetails));
   };
 

@@ -15,6 +15,7 @@ import {
 } from "../../../constants/SkeletonLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, CartState, removeFromCart } from "../../../Redux/cartSlice";
+import { RootState } from "../../../Redux/store";
 
 function ProductPage() {
   const { id } = useParams();
@@ -23,7 +24,7 @@ function ProductPage() {
   const [simailarProducts, setSimilarProducts] = useState<IProduct[]>();
   const dispatch = useDispatch();
 
-  const cart = useSelector((state: CartState) => state.items);
+  const cart = useSelector((state: RootState) => state.cartReducer.items);
 
   useEffect(() => {
     getProduct();

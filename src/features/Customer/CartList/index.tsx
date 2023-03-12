@@ -5,9 +5,10 @@ import { CartItem } from "./cartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { CartState } from "../../../Redux/cartSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { RootState } from "../../../Redux/store";
 
 function CardList({ setShowCart, showCart }: any) {
-  const cart = useSelector((state: CartState) => state.items);
+  const cart = useSelector((state: RootState) => state.cartReducer.items);
   const dispatch = useDispatch;
   const navigate = useNavigate();
   const handelCheckout = () => {

@@ -2,7 +2,9 @@ import { Empty } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import { CartState } from "../../../Redux/cartSlice";
+import { RootState } from "../../../Redux/store";
 import { ICart } from "../../../types";
+
 const Product = ({id, name, price, quantity, size ,photo}:ICart) => {
   return (
     <div className="cart-data flex items-start gap-4 shadow bg-emerald-100 p-2 mt-4">
@@ -28,7 +30,7 @@ const Product = ({id, name, price, quantity, size ,photo}:ICart) => {
 };
 
 function ProductList() {
-  const cart = useSelector((state: CartState) => state.items);
+  const cart = useSelector((state: RootState) => state.cartReducer.items);
   
   const total = cart.reduce((aacumulator, object)=>{
     return aacumulator + Number(object.price)
