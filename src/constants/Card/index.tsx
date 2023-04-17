@@ -13,6 +13,7 @@ function Card({ _id, name, intro, photo, price, discount }: ICard) {
   const isAddedToCart = cart.some((el) => el.id === _id);
 
   const dispatch = useDispatch();
+  
   const addCart = () => {
     const cartDetails: ICart = {
       id: _id,

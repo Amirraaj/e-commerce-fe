@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../../layout/Admin";
-import { Button, Space, Table, Tag, Popconfirm, notification, message } from "antd";
+import {
+  Button,
+  Space,
+  Table,
+  Tag,
+  Popconfirm,
+  notification,
+  message,
+} from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useNavigate } from "react-router-dom";
 import { getAllCategory, deleteCategory } from "../../../api/Admin";
@@ -12,11 +20,11 @@ interface DataType {
   color: String;
 }
 type ICategory = {
-    _id:any;
-    title:string;
-    description:string;
-    color:string;
-  }
+  _id: any;
+  title: string;
+  description: string;
+  color: string;
+};
 const data = [
   {
     title: "Women",
@@ -24,29 +32,28 @@ const data = [
   },
 ];
 
-
-
 function AdminCategory() {
   const navigate = useNavigate();
-  const [category, setCategory]= useState([]);
+  const [category, setCategory] = useState([]);
 
   useEffect(() => {
     getCategory();
-  },[]);
+  }, []);
 
-  function click (id:string) {
+  function click(id: string) {
     // notification.success({ message: id });
-    deleteCategory(id).then(()=>{
-        notification.success({message:"Category deleted sucessfully"})
+    deleteCategory(id)
+      .then(() => {
+        notification.success({ message: "Category deleted sucessfully" });
         getCategory();
-    }).catch((err)=>{
-        notification.error({message:err})
-    })
-
+      })
+      .catch((err) => {
+        notification.error({ message: err });
+      });
   }
 
-  function handelEdit( id:string){
-      navigate(`/admincategory/edit/${id}`)
+  function handelEdit(id: string) {
+    navigate(`/admincategory/edit/${id}`);
   }
 
   const columns = [
@@ -61,13 +68,16 @@ function AdminCategory() {
       dataIndex: "description",
       key: "description",
     },
-    
+
     {
       title: "Action",
       key: "action",
       render: (_: any, record: any) => (
         <Space size={50}>
-          <i className="fa-solid fa-pen-to-square text-primary  cursor-pointer hover:text-secondary" onClick={() => handelEdit(record._id)}></i>
+          <i
+            className="fa-solid fa-pen-to-square text-primary  cursor-pointer hover:text-secondary"
+            onClick={() => handelEdit(record._id)}
+          ></i>
           <Popconfirm
             title="Delete the task"
             description="Are you sure to delete this product?"
@@ -83,10 +93,10 @@ function AdminCategory() {
     },
   ];
 
-  const getCategory = async () =>{
-   const res = await getAllCategory();
-      setCategory(res?.data?.data)
-  }
+  const getCategory = async () => {
+    const res = await getAllCategory();
+    setCategory(res?.data?.data);
+  };
   const addCateg = () => {
     navigate("/admincategory/create");
   };
@@ -101,7 +111,7 @@ function AdminCategory() {
               <div className="flex justify-between items-center">
                 {" "}
                 <h1 className="text-2xl text-primary font-medium">
-                  Product
+                  Category
                 </h1>{" "}
                 <Button type="primary" size="large" onClick={() => addCateg()}>
                   + Add Category

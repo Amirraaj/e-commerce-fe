@@ -40,6 +40,17 @@ function PaymentDetails() {
   };
 
   const onSubmit = async (data: ContactUsFormData) => {
+
+  const  productArray =  cart.map((item) =>{
+    return{
+      ...item,
+      product_id:item.id,
+    }
+  })
+
+  console.log(productArray)
+
+
     const orderData = {
       user_id: id,
       receiver: {
@@ -48,13 +59,16 @@ function PaymentDetails() {
         location: data.location,
         monument: data.monument,
       },
-      products: cart,
+      products: productArray,
       status:"pending",
       paymentMethod: data.paymentMethod == "1" ? "cash on delivery" :"degital wallet"
     };
       const res = await sendOrder(orderData);
       if(res.status == 200){
-          
+          localStorage.removeItem("cart")
+          notification.success({message:"Order Send Sucessfully"})
+          window.location.href = "/";
+
       }else{
         notification.error({message:"Something went wrong. Try again"})
       }

@@ -69,6 +69,7 @@ function Navbar({ setShowCart, showCart }: any) {
       setBoxShadow(boxShadowVar);
     }
   }, [clientWindowHeight]);
+  
   const onClick: MenuProps["onClick"] = ({ key }) => {
     if (key === "1") {
       message.info("  This is Profile");
@@ -77,7 +78,8 @@ function Navbar({ setShowCart, showCart }: any) {
       localStorage.removeItem("token");
       setItem("");
       notification.success({ message: "Log out Sucessfull" });
-      navigate("/");
+      localStorage.removeItem("token")
+      window.location.href = "/";
     }
   };
 

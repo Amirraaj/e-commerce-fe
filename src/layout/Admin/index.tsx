@@ -20,6 +20,10 @@ const NavItem =[
         label:"UsersDetails",
         route:"/adminuser"
     },
+    {
+        label:"OrderDetails",
+        route:"/adminorder"
+    },
 ]
 
 

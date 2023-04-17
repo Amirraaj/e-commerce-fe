@@ -18,6 +18,9 @@ import UserDatails from "../pages/Admin/UserDetails";
 import AllProducts from "../pages/Customer/AllProducts";
 import Payment from "../pages/Customer/Payment";
 import Profile from "../pages/Customer/Profile";
+import AdminOrder from "../pages/Admin/Order";
+import OrderDetailPage from "../pages/Admin/UserOrdersPage";
+
 
 function App() {
   return (
@@ -43,6 +46,8 @@ function App() {
             <Route path="/admincategory" element ={<Category/>} />
             <Route path="/admincategory/create" element ={<AddCategory/>} />
             <Route path="/admincategory/edit/:id" element ={<EditCategory/>} />
+            <Route path="/adminorder" element={<AdminOrder/>} />
+            <Route path="/adminorder/:id" element={<OrderDetailPage/>} />
             <Route path="/adminuser" element={<UserDatails/>} />
         </Routes>
       </BrowserRouter>

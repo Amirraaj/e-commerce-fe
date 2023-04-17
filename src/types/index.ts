@@ -41,3 +41,13 @@ export type IUser ={
   email: String;
 }
 
+export type IOrder ={
+  id: String;
+  name: String;
+  email:String;
+  receiver_name:String;
+  status:String;
+  receiver_contact: String;
+  method: String;
+}
+
