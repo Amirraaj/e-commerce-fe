@@ -24,16 +24,20 @@ function RegisterPage() {
     mode: "onBlur", // "onChange"
   });
   const onSubmit = async (data: ContactUsFormData) => {
-    const res = await signUp(data);
+    const newUser = {
+      ...data,
+      role: "User",
+    };
+    const res = await signUp(newUser);
     if (res?.data?.status === 201) {
       notification.success({
         message: res?.data?.message,
       });
       navigate("/");
-    }else{
+    } else {
       notification.error({
-        message:"Registration Fail Please try again later !"
-      })
+        message: "Registration Fail Please try again later !",
+      });
     }
   };
   return (

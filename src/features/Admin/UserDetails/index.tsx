@@ -15,10 +15,8 @@ function User() {
     const users = await getAllUser();
     setAllUser(users?.data?.data);
   };
-  const handdelClick = (id: string) => {
-    console.log(id)
-  };
 
+  console.log(allUser);
   const columns = [
     {
       title: "First Name",
@@ -45,29 +43,15 @@ function User() {
       // align: 'center' as 'center',
     },
     {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+    },
+    {
       title: "Contact Number",
       dataIndex: "phone",
       key: "phone",
       render: (text: any) => <a>{text ? text : "-"}</a>,
-    },
-
-    {
-      title: "Action",
-      key: "action",
-      render: (_: any, record: any) => (
-        <Space size={50}>
-          <Popconfirm
-            title="Delete the task"
-            description="Are you sure to delete this product?"
-            okText="Yes"
-            onConfirm={() => handdelClick(record._id)}
-            cancelText="No"
-            icon={<i className="fa-solid fa-circle-question text-[red]"></i>}
-          >
-            <i className="fa-solid fa-trash text-[#ed1d24]  cursor-pointer hover:text-[#d4353f]"></i>
-          </Popconfirm>
-        </Space>
-      ),
     },
   ];
 

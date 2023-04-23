@@ -52,7 +52,6 @@ function EditProduct() {
     setProduct(res?.data?.data);
   };
 
-  console.log(product, "productlist");
 
   const {
     register,

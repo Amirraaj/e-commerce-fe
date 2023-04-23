@@ -3,7 +3,7 @@
 import axios from "axios";
 
 const URL = process.env.REACT_APP_API_URL || "http://localhost:5000/";
-const CatURl = URL +`category/`
+const CatURl = URL + `category/`;
 
 export const addProduct = async (data: any) => {
   return await axios.post(URL + "product/addproduct", data);

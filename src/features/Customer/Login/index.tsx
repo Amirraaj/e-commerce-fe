@@ -7,11 +7,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
 import { ErrorMessage } from "@hookform/error-message";
-import { signIn } from "../../../api/Customer/index"
+import { signIn } from "../../../api/Customer/index";
 type ContactUsFormData = z.infer<typeof loginSchema>;
 function LogInPage() {
   const navigate = useNavigate();
-  const [showPassword , setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     reset,
@@ -22,20 +22,29 @@ function LogInPage() {
     mode: "onBlur", // "onChange"
   });
 
-  const onSubmit = async(data: ContactUsFormData) => {
+  const onSubmit = async (data: ContactUsFormData) => {
     const res = await signIn(data);
     if (res?.data?.status === 201) {
       notification.success({
         message: res?.data?.message,
       });
-      localStorage.setItem("token", res?.data?.token);
-      navigate('/');
-    }else{
+      const storagedata = {
+        token: res?.data?.token,
+        role: res?.data?.role,
+      };
+      if (res?.data?.role === "Admin") {
+        sessionStorage.setItem("AdminAuth", JSON.stringify(storagedata));
+        navigate("/admin");
+      } else {
+        localStorage.setItem("token", res?.data?.token);
+        navigate("/");
+      }
+    } else {
       notification.error({
-        message:res?.data?.message,
-      })
+        message: res?.data?.message,
+      });
     }
-  }
+  };
   return (
     <section className="flex justify-center items-center p-10 md:p-20  bg-secondary">
       <div
@@ -76,8 +85,18 @@ function LogInPage() {
               />
             </div>
             <div className="mt-8 relative">
-            { showPassword ? <i className="fa-solid fa-eye absolute text-primary top-5 right-10 cursor-pointer" onClick={()=>setShowPassword(prev => !prev)}></i> : <i className="fa-solid fa-eye-slash absolute text-primary top-5 right-10 cursor-pointer" onClick={()=>setShowPassword(prev => !prev)}></i> }
-            
+              {showPassword ? (
+                <i
+                  className="fa-solid fa-eye absolute text-primary top-5 right-10 cursor-pointer"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                ></i>
+              ) : (
+                <i
+                  className="fa-solid fa-eye-slash absolute text-primary top-5 right-10 cursor-pointer"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                ></i>
+              )}
+
               <input
                 className="w-full text-lg text-primary py-3 border-b border-primary  focus:outline-none focus:border-indigo-500 placeholder:text-primary "
                 type={`${showPassword ? "text" : "password"}`}

@@ -1,16 +1,14 @@
-
 import React, { useState } from "react";
 import { Upload, notification } from "antd";
-import ImgCrop from 'antd-img-crop';
+import ImgCrop from "antd-img-crop";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 
 interface Image {
-  setImageName:any;
-  setPicture?:any;
+  setImageName: any;
+  setPicture?: any;
 }
 
-
-const App: React.FC <Image> = ({setImageName, setPicture}) => {
+const App: React.FC<Image> = ({ setImageName, setPicture }) => {
   const [uploadNewFile, setNewUploadFile] = useState<boolean>(true);
 
   const onChange: UploadProps["onChange"] = (info: any) => {
@@ -22,7 +20,7 @@ const App: React.FC <Image> = ({setImageName, setPicture}) => {
     } else if (info.file.status === "error") {
       notification.error({ message: "file upload failed." });
     }
-    setNewUploadFile(prev =>!prev)
+    setNewUploadFile((prev) => !prev);
   };
 
   const onPreview = async (file: UploadFile) => {
@@ -42,23 +40,23 @@ const App: React.FC <Image> = ({setImageName, setPicture}) => {
 
   return (
     <>
-    <ImgCrop 
-    aspect={2/3}
-    modalTitle="Crop Image"
-    modalOk="Crop"
-    modalCancel="Cancel"
-    fillColor="transparent"
-    >
-    <Upload
-      name="imageFile"
-      action="http://localhost:5000/product/upload"
-      listType="picture-card"
-      onChange={onChange}
-      onPreview={onPreview} 
-    >
-      {"+ Upload"}
-    </Upload>
-    </ImgCrop>
+      <ImgCrop
+        aspect={2 / 3}
+        modalTitle="Crop Image"
+        modalOk="Crop"
+        modalCancel="Cancel"
+        fillColor="transparent"
+      >
+        <Upload
+          name="imageFile"
+          action="http://localhost:5000/product/upload"
+          listType="picture-card"
+          onChange={onChange}
+          onPreview={onPreview}
+        >
+          {"+ Upload"}
+        </Upload>
+      </ImgCrop>
     </>
   );
 };

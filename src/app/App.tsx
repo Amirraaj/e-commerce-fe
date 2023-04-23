@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import About from "../pages/Customer/About";
@@ -20,35 +20,78 @@ import Payment from "../pages/Customer/Payment";
 import Profile from "../pages/Customer/Profile";
 import AdminOrder from "../pages/Admin/Order";
 import OrderDetailPage from "../pages/Admin/UserOrdersPage";
-
+import NotAuthorized from "../components/NotAuthorized";
 
 function App() {
+  const [isAuthorized, setIsAutorized] = useState(false);
+
+  useEffect(() => {
+    const token = JSON.parse(sessionStorage?.getItem("AdminAuth") as any);
+    if (token?.token) {
+      setIsAutorized(true);
+    } else {
+      setIsAutorized(false);
+    }
+  }, []);
+
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-            {/* customer portal routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/product/:id" element={<Product/>} />
-            <Route path="/login" element={<LogIn/>} />
-            <Route path="/register" element={<Register/>} />
-            <Route path="/allproducts" element={<AllProducts/>} />
-            <Route path="/about" element={<AllProducts/>} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/profile" element={<Profile />} />
-            
-            {/* admin portal routes */}
-            <Route path="/admin" element ={<AdminHome/>} />
-            <Route path="/adminproduct" element ={<ProductList/>} />
-            <Route path="/adminproduct/create" element ={<AddProduct/>} />
-            <Route path="/adminproduct/edit/:id" element ={<EditProduct/>} />
-            <Route path="/admincategory" element ={<Category/>} />
-            <Route path="/admincategory/create" element ={<AddCategory/>} />
-            <Route path="/admincategory/edit/:id" element ={<EditCategory/>} />
-            <Route path="/adminorder" element={<AdminOrder/>} />
-            <Route path="/adminorder/:id" element={<OrderDetailPage/>} />
-            <Route path="/adminuser" element={<UserDatails/>} />
+          {/* customer portal routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/product/:id" element={<Product />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/allproducts" element={<AllProducts />} />
+          <Route path="/about" element={<AllProducts />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/profile" element={<Profile />} />
+
+          {/* admin portal routes */}
+          {/* <Route path="/admin" element ={<AdminHome/>} />
+           */}
+          <Route
+            path="/admin"
+            element={!isAuthorized ? <NotAuthorized /> : <AdminHome />}
+          />
+          <Route
+            path="/adminproduct"
+            element={!isAuthorized ? <NotAuthorized /> : <ProductList />}
+          />
+          <Route
+            path="/adminproduct/create"
+            element={!isAuthorized ? <NotAuthorized /> : <AddProduct />}
+          />
+          <Route
+            path="/adminproduct/edit/:id"
+            element={!isAuthorized ? <NotAuthorized /> : <EditProduct />}
+          />
+          <Route
+            path="/admincategory"
+            element={!isAuthorized ? <NotAuthorized /> : <Category />}
+          />
+          <Route
+            path="/admincategory/create"
+            element={!isAuthorized ? <NotAuthorized /> : <AddCategory />}
+          />
+          <Route
+            path="/admincategory/edit/:id"
+            element={!isAuthorized ? <NotAuthorized /> : <EditCategory />}
+          />
+          <Route
+            path="/adminorder"
+            element={!isAuthorized ? <NotAuthorized /> : <AdminOrder />}
+          />
+          <Route
+            path="/adminorder/:id"
+            element={!isAuthorized ? <NotAuthorized /> : <OrderDetailPage />}
+          />
+          <Route
+            path="/adminuser"
+            element={!isAuthorized ? <NotAuthorized /> : <UserDatails />}
+          />
         </Routes>
       </BrowserRouter>
     </div>

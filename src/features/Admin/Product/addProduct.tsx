@@ -53,7 +53,7 @@ function AddProduct() {
   }, [reset, imageName]);
 
   const onSubmit = async (data: ProductFormData) => {
-    console.log(data, category);
+    
     const res = await addProduct(data);
     if (res?.data?.status === 201) {
       notification.success({ message: res?.data?.message });
