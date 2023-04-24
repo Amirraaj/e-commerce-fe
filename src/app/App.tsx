@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import About from "../pages/Customer/About";
 import Home from "../pages/Customer/Home";
 import LogIn from "../pages/Customer/Login";
@@ -21,18 +21,29 @@ import Profile from "../pages/Customer/Profile";
 import AdminOrder from "../pages/Admin/Order";
 import OrderDetailPage from "../pages/Admin/UserOrdersPage";
 import NotAuthorized from "../components/NotAuthorized";
+import { getUser } from "../Redux/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectToggleValue, toggleValue } from "../Redux/toggleAuth";
 
 function App() {
-  const [isAuthorized, setIsAutorized] = useState(false);
+  // const [isAuthorized, setIsAutorized] = useState(true);
+  // const user = useSelector(getUser);
+  
+  const isAuthorized = useSelector(selectToggleValue);
 
-  useEffect(() => {
-    const token = JSON.parse(sessionStorage?.getItem("AdminAuth") as any);
-    if (token?.token) {
-      setIsAutorized(true);
-    } else {
-      setIsAutorized(false);
-    }
-  }, []);
+  // const handleClick = () => {
+  //   dispatch(toggleValue());
+  // };
+  // useEffect(() => {
+  //   setIsAutorized(true);
+  //   const token = JSON.parse(sessionStorage?.getItem("AdminAuth") as any);
+  //   if (token?.token) {
+  //     setIsAutorized(true);
+  //   } else {
+  //     setIsAutorized(false);
+  //   }
+  //   console.log(isAuthorized, "isauth");
+  // }, [sessionStorage?.getItem("AdminAuth"), isAuthorized, user]);
 
   return (
     <div className="App">
@@ -49,9 +60,6 @@ function App() {
           <Route path="/payment" element={<Payment />} />
           <Route path="/profile" element={<Profile />} />
 
-          {/* admin portal routes */}
-          {/* <Route path="/admin" element ={<AdminHome/>} />
-           */}
           <Route
             path="/admin"
             element={!isAuthorized ? <NotAuthorized /> : <AdminHome />}

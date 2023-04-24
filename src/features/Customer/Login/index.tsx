@@ -8,9 +8,12 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import { signIn } from "../../../api/Customer/index";
+import { toggleValue } from "../../../Redux/toggleAuth";
+import { useDispatch } from "react-redux";
 type ContactUsFormData = z.infer<typeof loginSchema>;
 function LogInPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -34,6 +37,7 @@ function LogInPage() {
       };
       if (res?.data?.role === "Admin") {
         sessionStorage.setItem("AdminAuth", JSON.stringify(storagedata));
+        dispatch(toggleValue());
         navigate("/admin");
       } else {
         localStorage.setItem("token", res?.data?.token);
